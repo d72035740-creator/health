@@ -29,10 +29,7 @@ def test_system_status_schema_and_explicit_unimplemented_states() -> None:
     assert body["data_provenance"] == "SIMULATED"
 
     future_engines = {
-        "digital_twin",
-        "virtual_imu",
-        "virtual_temperature",
-        "virtual_contact",
+            "digital_twin",
         "quality_engine",
         "signal_processing",
         "baseline_engine",
@@ -42,6 +39,7 @@ def test_system_status_schema_and_explicit_unimplemented_states() -> None:
         "decision_engine",
     }
     assert all(body[name] == "NOT_IMPLEMENTED" for name in future_engines)
+    assert body["virtual_imu"] == body["virtual_temperature"] == body["virtual_contact"] == "READY"
 
 
 def test_system_status_has_no_fake_medical_or_ml_result() -> None:

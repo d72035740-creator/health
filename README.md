@@ -2,11 +2,11 @@
 
 Aequor Health is a proposed bilateral wearable surveillance platform for detecting persistent physiological changes associated with possible early lymphedema. The eventual system is intended to combine multi-frequency bioimpedance, motion, skin-temperature, and electrode-contact sensing with local Edge-AI processing.
 
-> **Phase 2 prototype disclaimer:** This repository is not a clinically validated diagnostic system. The Digital Patient and bilateral bioimpedance data are synthetic digital-twin outputs, not real patient data or validated physiological measurements. It contains no quality engine, signal processing, trained model, anomaly score, risk value, or medical decision logic.
+> **Phase 3 prototype disclaimer:** This repository is not a clinically validated diagnostic system. Digital Patient, bioimpedance, IMU, skin-temperature, and contact data are synthetic digital-twin outputs. It contains no quality engine, signal processing, trained model, anomaly score, risk value, or medical decision logic.
 
 ## Current scope
 
-This repository implements **Phase 2 — Bilateral Bioimpedance Digital Twin**, while preserving the Phase 0–1 foundation:
+This repository implements **Phase 3 — Virtual Wearable Sensor Layer**, while preserving the earlier foundation:
 
 - a Next.js/TypeScript/Tailwind product shell;
 - a FastAPI/Pydantic backend shell;
@@ -19,6 +19,7 @@ This repository implements **Phase 2 — Bilateral Bioimpedance Digital Twin**, 
 - a synchronized bilateral multi-frequency Cole-model digital twin;
 - bounded deterministic synthetic instrumentation noise;
 - raw/unqualified bilateral acquisition REST API and engineering visualizations;
+- synchronized 3-second bilateral virtual wearable windows (50 Hz IMU, 4 Hz skin temperature, 12 Hz contact impedance);
 - structured backend logging and focused tests; and
 - documented boundaries for later phases.
 
@@ -54,6 +55,19 @@ The Phase 2 acquisition API is:
 GET  /api/v1/bioimpedance/config
 POST /api/v1/bioimpedance/sweep
 ```
+
+## Virtual wearable sensor layer
+
+Phase 3 adds manually requested bilateral raw sensor windows. Each captures one **anchor simulated time** and one wall-clock anchor, then uses `relative_time_seconds` from 0.0 to 3.0 seconds for local physical acquisition. Generating a window never advances or stretches the Phase 1 longitudinal simulation clock.
+
+Each band has a synthetic 6-axis IMU, synthetic skin temperature, and raw electrode `contact_impedance_ohm`. IMU gravity uses 9.80665 m/s² and coherent orientation/motion presets; temperature and contact signals vary slowly or smoothly with bounded deterministic prototype instrumentation noise. These are engineering behaviors, not characterized device performance or clinical reference values.
+
+```text
+GET  /api/v1/virtual-sensors/config
+POST /api/v1/virtual-sensors/window
+```
+
+Windows are `SIMULATED` and `RAW_UNQUALIFIED`. There is no quality score, acceptance/rejection, motion gating, threshold, or automated BIS acquisition. Namespaced seeds by modality, arm, and window index make reset reproducible and keep sensor streams independent from BIS calls.
 
 ## Prerequisites
 

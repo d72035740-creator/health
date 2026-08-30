@@ -23,7 +23,7 @@ export function ProductShell({ children }: { children: ReactNode }) {
           </div>
         </div>
         <span className="rounded-full border border-[rgba(93,228,207,.22)] bg-[var(--aqua-soft)] px-3 py-1.5 text-[10px] font-semibold tracking-[0.18em] text-[var(--aqua)] sm:text-xs">
-          PHASE 2
+          PHASE 3
         </span>
       </header>
       {children}

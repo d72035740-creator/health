@@ -9,6 +9,7 @@ from app.api.routes.bioimpedance import router as bioimpedance_router
 from app.api.routes.health import router as health_router
 from app.api.routes.simulation import router as simulation_router
 from app.api.routes.system import router as system_router
+from app.api.routes.virtual_sensors import router as virtual_sensors_router
 from app.api.websocket.simulation import router as simulation_websocket_router
 from app.api.websocket.system import router as system_websocket_router
 from app.core.config import get_settings
@@ -29,9 +30,9 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(
     title="Aequor Health API",
-    version="0.3.0",
+    version="0.4.0",
     description=(
-        "Phase 2 bilateral bioimpedance digital twin API. Synthetic raw acquisitions "
+        "Phase 3 virtual wearable sensor and bilateral bioimpedance digital twin API. Synthetic raw acquisitions "
         "are not clinically validated; no clinical inference is implemented."
     ),
     lifespan=lifespan,
@@ -60,6 +61,7 @@ async def log_unexpected_errors(request: Request, call_next):  # type: ignore[no
 
 app.include_router(health_router)
 app.include_router(bioimpedance_router)
+app.include_router(virtual_sensors_router)
 app.include_router(simulation_router)
 app.include_router(system_router)
 app.include_router(system_websocket_router)

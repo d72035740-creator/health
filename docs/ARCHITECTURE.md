@@ -1,8 +1,8 @@
 # Architecture
 
-## Phase 2 boundary
+## Phase 3 boundary
 
-Phase 0 established executable infrastructure and contracts. Phase 1 added the synthetic Digital Patient identity and deterministic simulation-session lifecycle. Phase 2 adds only synthetic bilateral multi-frequency bioimpedance acquisition. It deliberately stops before IMU, temperature, contact, measurement quality, signal processing, personalization, ML, temporal reasoning, confounder reasoning, decision logic, persistence, or patient/clinician analytics.
+Phase 0 established infrastructure, Phase 1 added the Digital Patient and authoritative longitudinal clock, Phase 2 added bilateral raw BIS, and Phase 3 adds raw bilateral virtual wearable sensing. Phase 3 deliberately stops before measurement quality, signal processing, personalization, ML, temporal reasoning, confounder reasoning, decision logic, persistence, or patient/clinician analytics.
 
 ## Dependency direction
 
@@ -66,6 +66,12 @@ The ideal `ColeImpedanceModel` is pure and independently testable. It produces o
 `BilateralBioimpedanceService` owns a sweep index and captures one Digital Patient snapshot before producing both arm sweeps. The pair receives one deterministic `pair_id`, one index, one wall-clock timestamp, and one simulated timestamp. Reset hooks restore the index to zero, so the first post-reset acquisition produces the same deterministic noise sequence for the same seed. The source protocol preserves a later replacement path for an `AD5940BioimpedanceSource`.
 
 Phase 2 output is raw/unqualified only. Future measurement-quality and signal-processing modules consume `BilateralBioimpedanceSweep`; they do not recreate clocks or reinterpret synthetic provenance as measured physiology.
+
+## Virtual wearable sensor layer
+
+`WearableSensorService` captures exactly one Digital Patient snapshot and never mutates the Phase 1 clock. `WearableSensorWindow` records that snapshot as `anchor_simulated_time` and `anchor_wall_clock_time`; individual samples use acquisition-local `relative_time_seconds`. The sources are independent of the BIS digital twin: Phase 4 may later connect raw windows to quality gating and then BIS acquisition.
+
+The IMU convention is sensor x-forward, y-right, z-up. A 9.80665 m/s² gravity vector is projected using coherent roll/pitch. Posture derivatives drive gyro values and active motion uses smooth sinusoids, not independent random samples. Temperature is synthetic skin temperature, and contact is raw impedance rather than a quality score. Namespaced seed derivation by modality, arm, and window index preserves deterministic reset behavior.
 
 ## Frontend modules
 

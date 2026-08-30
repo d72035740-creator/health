@@ -36,3 +36,8 @@ class TemperatureSource(Protocol):
 @runtime_checkable
 class ContactQualitySource(Protocol):
     async def acquire_sample(self, arm_side: ArmSide) -> ContactQualitySample: ...
+
+
+# Phase 3 sources use raw contact impedance rather than interpreted quality.
+# The concrete window-oriented protocols live beside the virtual sensor service,
+# avoiding a dependency from the Phase 0 domain boundary onto Phase 3 contracts.

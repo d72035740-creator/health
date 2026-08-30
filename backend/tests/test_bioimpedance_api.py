@@ -68,9 +68,6 @@ def test_system_status_reports_only_completed_phase_two_subsystem_ready() -> Non
     assert body["bioimpedance_digital_twin"] == "READY"
     assert body["digital_twin"] == "NOT_IMPLEMENTED"
     future = {
-        "virtual_imu",
-        "virtual_temperature",
-        "virtual_contact",
         "quality_engine",
         "signal_processing",
         "baseline_engine",
@@ -80,4 +77,4 @@ def test_system_status_reports_only_completed_phase_two_subsystem_ready() -> Non
         "decision_engine",
     }
     assert all(body[name] == "NOT_IMPLEMENTED" for name in future)
-
+    assert body["virtual_imu"] == body["virtual_temperature"] == body["virtual_contact"] == "READY"

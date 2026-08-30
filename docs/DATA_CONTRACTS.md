@@ -66,6 +66,12 @@ All Phase 2 acquisitions have `provenance = SIMULATED`, `source = DIGITAL_TWIN`,
 
 The optional bounded noise layer only alters the complex R/X components. Magnitude and phase are calculated from the resulting complex number, preserving internal consistency. Namespaced seeds based on arm and sweep index make repeated output reproducible after reset without reading global random state.
 
+## Virtual wearable sensor contracts
+
+`WearableSensorWindow` is one synchronized bilateral short acquisition. It contains `window_id`, `window_index`, `anchor_simulated_time`, `anchor_wall_clock_time`, `duration_seconds`, provenance/source/qualification, engineering condition inputs, and `left`/`right` `BandSensorWindow` objects. The anchors describe the longitudinal session; they are not sample time.
+
+`BandSensorWindow` stores modality sample rates and three raw sequences: `IMUSample` (local time, acceleration in `m_s2`, angular velocity in `rad_s`, coherent roll/pitch/yaw in degrees), `TemperatureSample` (local time and skin `temperature_c`), and `ContactSample` (local time and `contact_impedance_ohm`). Local timestamps run from 0 to the configured duration and never advance the global simulation clock. `RAW_UNQUALIFIED` only marks the raw stage; it is not an acceptance, rejection, or quality score.
+
 ## Data-stage separation
 
 | Stage | Examples | Owner |

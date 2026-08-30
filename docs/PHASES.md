@@ -1,13 +1,13 @@
 # Delivery phases
 
-Phases 0 through 2 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
+Phases 0 through 3 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
 
 | Phase | Name | Status |
 | ---: | --- | --- |
 | 0 | Architecture | Implemented |
 | 1 | Digital Patient Engine | Implemented |
 | 2 | Bilateral BIS Digital Twin | Implemented |
-| 3 | Virtual IMU/Temperature/Contact | Not implemented |
+| 3 | Virtual IMU/Temperature/Contact | Implemented |
 | 4 | Measurement Quality Engine | Not implemented |
 | 5 | Signal Processing | Not implemented |
 | 6 | Personalized Baseline | Not implemented |
