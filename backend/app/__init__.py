@@ -1,0 +1,2 @@
+"""Aequor Health backend application."""
+
