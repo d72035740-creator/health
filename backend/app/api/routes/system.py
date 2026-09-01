@@ -4,6 +4,9 @@ from fastapi import APIRouter
 
 from app.domain.enums import DataProvenance, PrototypeMode, SubsystemStatus
 from app.domain.models import SystemStatus
+from app.ml.runtime import ml_runtime
+from app.temporal.service import temporal_service
+from app.confounders.service import confounder_service
 
 
 logger = logging.getLogger(__name__)
@@ -24,11 +27,12 @@ async def system_status() -> SystemStatus:
         virtual_imu=SubsystemStatus.READY,
         virtual_temperature=SubsystemStatus.READY,
         virtual_contact=SubsystemStatus.READY,
-        quality_engine=SubsystemStatus.NOT_IMPLEMENTED,
-        signal_processing=SubsystemStatus.NOT_IMPLEMENTED,
-        baseline_engine=SubsystemStatus.NOT_IMPLEMENTED,
-        ml_engine=SubsystemStatus.NOT_IMPLEMENTED,
-        temporal_engine=SubsystemStatus.NOT_IMPLEMENTED,
-        confounder_engine=SubsystemStatus.NOT_IMPLEMENTED,
-        decision_engine=SubsystemStatus.NOT_IMPLEMENTED,
+        quality_engine=SubsystemStatus.READY,
+        signal_processing=SubsystemStatus.READY,
+        baseline_engine=SubsystemStatus.READY,
+        scenario_engine=SubsystemStatus.READY,
+        ml_engine=SubsystemStatus.READY if ml_runtime._interpreter is not None else SubsystemStatus.ERROR,
+        temporal_engine=SubsystemStatus.READY,
+        confounder_engine=SubsystemStatus.READY,
+        decision_engine=SubsystemStatus.READY,
     )

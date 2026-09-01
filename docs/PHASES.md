@@ -1,6 +1,6 @@
 # Delivery phases
 
-Phases 0 through 3 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
+Phases 0 through 13 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
 
 | Phase | Name | Status |
 | ---: | --- | --- |
@@ -8,14 +8,16 @@ Phases 0 through 3 are implemented. Every later phase is a roadmap boundary, not
 | 1 | Digital Patient Engine | Implemented |
 | 2 | Bilateral BIS Digital Twin | Implemented |
 | 3 | Virtual IMU/Temperature/Contact | Implemented |
-| 4 | Measurement Quality Engine | Not implemented |
-| 5 | Signal Processing | Not implemented |
-| 6 | Personalized Baseline | Not implemented |
-| 7 | Scenario Engine | Not implemented |
-| 8 | TinyML Training | Not implemented |
-| 9 | TFLite Inference | Not implemented |
-| 10 | Temporal Intelligence | Not implemented |
-| 11 | Confounder Reasoning | Not implemented |
+| 4 | Measurement Quality & Motion-Gated Acquisition | Implemented |
+| 5 | BIS Signal Processing & Feature Extraction | Implemented |
+| 6 | Personalized Baseline Engine | Implemented |
+| 7 | Longitudinal Scenario Engine | Implemented |
+| 8 | TinyML Training | Implemented |
+| 9 | TFLite Inference | Implemented |
+| 10 | Temporal Intelligence | Implemented |
+| 11 | Confounder Reasoning | Implemented |
+| 12 | ADI + Surveillance State Machine | Implemented |
+| 13 | Integrated Runtime | Implemented |
 | 12 | ADI + State Machine | Not implemented |
 | 13 | Main API/Streaming | Not implemented |
 | 14 | Patient UI | Not implemented |

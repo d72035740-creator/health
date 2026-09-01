@@ -1,2 +1,1 @@
-"""Phase 8–9 boundary. No ML model or inference exists in Phase 0."""
-
+"""TinyML training and strict local TFLite inference (Phases 8–9)."""

@@ -1,2 +1,1 @@
-"""Phase 4 boundary. No measurement-quality algorithm exists in Phase 0."""
-
+"""Technical measurement-quality evaluation (Phase 4)."""

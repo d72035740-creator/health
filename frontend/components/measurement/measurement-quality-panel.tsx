@@ -1,0 +1,18 @@
+"use client";
+import { useState } from "react";
+import { attemptMeasurement } from "@/lib/api/measurement";
+import type { MeasurementAttempt } from "@/lib/types/measurement";
+import type { ContactCondition, MotionCondition } from "@/lib/types/virtual-sensors";
+import { SignalProcessingInspector } from "@/components/measurement/signal-processing-inspector";
+
+const motions: [MotionCondition, string][] = [["STABLE_REST", "Stable Rest"], ["ACTIVE_MOTION", "Active Motion"], ["POSTURE_TRANSITION", "Posture Transition"]];
+const contacts: [ContactCondition, string][] = [["NOMINAL_CONTACT", "Nominal"], ["UNSTABLE_CONTACT", "Unstable"], ["POOR_CONTACT", "Poor"]];
+
+export function MeasurementQualityPanel({ backendConnected }: { backendConnected: boolean }) {
+  const [motion, setMotion] = useState<MotionCondition>("STABLE_REST");
+  const [contact, setContact] = useState<ContactCondition>("NOMINAL_CONTACT");
+  const [result, setResult] = useState<MeasurementAttempt | null>(null);
+  const [busy, setBusy] = useState(false);
+  const run = async () => { setBusy(true); try { setResult(await attemptMeasurement({ motion_condition: motion, contact_condition: contact, temperature_offset_c: 0 })); } finally { setBusy(false); } };
+  return <section className="mt-6 overflow-hidden rounded-3xl border border-[rgba(233,185,110,.2)] bg-[rgba(7,24,28,.82)]"><div className="flex flex-col gap-4 border-b border-[var(--line)] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7"><div><p className="text-[10px] font-semibold uppercase tracking-[.24em] text-[var(--amber)]">Measurement Quality Engine</p><h2 className="mt-2 text-xl font-medium text-white">Technical acquisition gate</h2><p className="mt-1 text-xs text-[var(--muted)]">RAW SENSOR WINDOW → QUALITY ANALYSIS → conditional BIS</p></div><button disabled={!backendConnected || busy} onClick={() => void run()} className="rounded-lg border border-[rgba(233,185,110,.3)] bg-[rgba(233,185,110,.1)] px-4 py-3 text-[10px] font-semibold uppercase tracking-[.14em] text-[var(--amber)] disabled:opacity-40">{busy ? "Evaluating…" : "Attempt measurement"}</button></div><div className="flex flex-wrap gap-2 px-5 pt-5 sm:px-7">{[...motions, ...contacts].map(([value, label]) => <button key={value} onClick={() => (motions.some(([v]) => v === value) ? setMotion(value as MotionCondition) : setContact(value as ContactCondition))} className={`rounded-lg border px-3 py-2 text-[10px] uppercase tracking-[.1em] ${(motion === value || contact === value) ? "border-[var(--aqua)] text-[var(--aqua)]" : "border-[var(--line)] text-[var(--muted)]"}`}>{label}</button>)}</div>{result ? <><div className="p-5 sm:p-7"><p className="text-[10px] uppercase tracking-[.16em] text-[var(--muted)]">Technical measurement quality</p><p className="mt-2 text-4xl font-light text-white">{result.quality_assessment.overall_score.toFixed(0)} <span className="text-base text-[var(--muted)]">/ 100</span></p><p className="mt-2 text-xs text-[var(--aqua)]">{result.quality_assessment.qualification}</p><p className="mt-4 text-xs text-[var(--muted)]">{result.bis_sweep ? "BILATERAL BIS ACQUIRED" : "BIOIMPEDANCE ACQUISITION BLOCKED"}{result.quality_assessment.rejection_reasons.length ? ` · ${result.quality_assessment.rejection_reasons.join(" · ")}` : ""}</p></div><SignalProcessingInspector features={result.processed_features} /></> : <div className="m-5 rounded-2xl border border-dashed border-white/10 p-7 text-sm text-[var(--muted)] sm:m-7">Choose engineering conditions, then attempt one measurement. This panel reports technical acquisition quality only.</div>}</section>;
+}

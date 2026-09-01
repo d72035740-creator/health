@@ -2,11 +2,11 @@
 
 Aequor Health is a proposed bilateral wearable surveillance platform for detecting persistent physiological changes associated with possible early lymphedema. The eventual system is intended to combine multi-frequency bioimpedance, motion, skin-temperature, and electrode-contact sensing with local Edge-AI processing.
 
-> **Phase 3 prototype disclaimer:** This repository is not a clinically validated diagnostic system. Digital Patient, bioimpedance, IMU, skin-temperature, and contact data are synthetic digital-twin outputs. It contains no quality engine, signal processing, trained model, anomaly score, risk value, or medical decision logic.
+> **Phase 12 + 13 prototype disclaimer:** This repository is not a clinically validated diagnostic system. ADI and surveillance states are prototype research/workflow outputs only; they are not diagnosis, disease risk, or clinical probability.
 
 ## Current scope
 
-This repository implements **Phase 3 — Virtual Wearable Sensor Layer**, while preserving the earlier foundation:
+This repository implements **Phase 12 + 13 — Aequor Decision Engine & Integrated Runtime**, while preserving the earlier foundation:
 
 - a Next.js/TypeScript/Tailwind product shell;
 - a FastAPI/Pydantic backend shell;
@@ -20,6 +20,18 @@ This repository implements **Phase 3 — Virtual Wearable Sensor Layer**, while 
 - bounded deterministic synthetic instrumentation noise;
 - raw/unqualified bilateral acquisition REST API and engineering visualizations;
 - synchronized 3-second bilateral virtual wearable windows (50 Hz IMU, 4 Hz skin temperature, 12 Hz contact impedance);
+- centralized prototype technical-quality scoring and conditional BIS acquisition;
+- deterministic named bilateral BIS feature extraction after qualified acquisition;
+- robust personalized baseline statistics and signed baseline-relative comparisons;
+- hidden-physiology longitudinal scenarios that perturb only the digital-twin input layer;
+- a deterministic baseline-only autoencoder corpus and versioned `aequor-ml-input-v1` vector adapter;
+- exported Keras, float32 TFLite, and fully quantized INT8 TFLite model artifacts with hash metadata;
+- strict local INT8 TFLite inference with runtime quantization/dequantization and no Keras/fallback scoring;
+- explicit ML status/model APIs and artifact-removal failure behavior (`ML INFERENCE UNAVAILABLE`);
+- time-aware EWMA, one-sided CUSUM, persistence, trend, recovery, and temporal engineering states;
+- scenario-blind bilateral/unilateral, temperature, contact, motion, and transient evidence reasoning;
+- explicit ADI components/modifiers, hysteretic surveillance state machine, and deterministic explanations;
+- one authoritative integrated runtime measurement-cycle endpoint;
 - structured backend logging and focused tests; and
 - documented boundaries for later phases.
 
@@ -67,7 +79,13 @@ GET  /api/v1/virtual-sensors/config
 POST /api/v1/virtual-sensors/window
 ```
 
-Windows are `SIMULATED` and `RAW_UNQUALIFIED`. There is no quality score, acceptance/rejection, motion gating, threshold, or automated BIS acquisition. Namespaced seeds by modality, arm, and window index make reset reproducible and keep sensor streams independent from BIS calls.
+Windows are `SIMULATED` and `RAW_UNQUALIFIED` at the Phase 3 source boundary. Namespaced seeds by modality, arm, and window index make reset reproducible and keep sensor streams independent from BIS calls.
+
+Phase 4 adds `POST /api/v1/measurement/attempt`: a raw window is evaluated by the Measurement Quality Engine and a bilateral BIS sweep is acquired only when the technical window is `QUALIFIED`. Thresholds are centralized, versioned as `quality-v1`, explicitly labeled prototype engineering thresholds, and are not clinically validated. Rejected attempts never consume a BIS sweep index.
+
+Phase 5 extends qualified attempts with `processed_features`. The processor validates complex R/X/magnitude/phase consistency, computes signed bilateral frequency features and log-frequency spectral slopes, and performs a bounded deterministic complex Cole fit from observed sweep values only. Features are versioned `bis-features-v1`; they are processed mathematical transformations, not biomarkers, risk, or diagnosis. Cole-fit parameters remain nullable on failure and are excluded from the fixed ML-vector adapter when unavailable.
+
+Phase 6 baseline calibration consumes only qualified processed features, requires 28 observations spanning at least seven simulated days, and stores median/MAD/IQR robust statistics under `baseline-v1`. Phase 7 scenarios change hidden Cole parameters before acquisition; they never directly modify features or baseline comparisons. Scenario progression follows authoritative simulated time, and scenario reset preserves a completed baseline while full simulation reset clears it. Phase 8 trains only on baseline-stable vectors normalized by the exact Phase 6 robust statistics. Phase 9 invokes only the verified INT8 artifact after a qualified attempt with a READY baseline; missing, corrupt, or incompatible artifacts produce an explicit unavailable state.
 
 ## Prerequisites
 
@@ -143,5 +161,7 @@ aequor-health/
 ├── .env.example      Documented local configuration
 └── README.md
 ```
+
+TinyML artifacts are stored in `models/`. TensorFlow training is supported in the Python 3.12 `.venv-ml` environment; the backend can run the exported INT8 model with LiteRT in the regular environment. Phase 10 uses simulated timestamps (not measurement counts) for temporal evidence, and Phase 11 consumes observed outputs only.
 
 # health

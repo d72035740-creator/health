@@ -1,6 +1,6 @@
 # Architecture
 
-## Phase 3 boundary
+## Phase 4 boundary
 
 Phase 0 established infrastructure, Phase 1 added the Digital Patient and authoritative longitudinal clock, Phase 2 added bilateral raw BIS, and Phase 3 adds raw bilateral virtual wearable sensing. Phase 3 deliberately stops before measurement quality, signal processing, personalization, ML, temporal reasoning, confounder reasoning, decision logic, persistence, or patient/clinician analytics.
 
@@ -72,6 +72,42 @@ Phase 2 output is raw/unqualified only. Future measurement-quality and signal-pr
 `WearableSensorService` captures exactly one Digital Patient snapshot and never mutates the Phase 1 clock. `WearableSensorWindow` records that snapshot as `anchor_simulated_time` and `anchor_wall_clock_time`; individual samples use acquisition-local `relative_time_seconds`. The sources are independent of the BIS digital twin: Phase 4 may later connect raw windows to quality gating and then BIS acquisition.
 
 The IMU convention is sensor x-forward, y-right, z-up. A 9.80665 m/s² gravity vector is projected using coherent roll/pitch. Posture derivatives drive gyro values and active motion uses smooth sinusoids, not independent random samples. Temperature is synthetic skin temperature, and contact is raw impedance rather than a quality score. Namespaced seed derivation by modality, arm, and window index preserves deterministic reset behavior.
+
+## Measurement quality and gated acquisition
+
+```text
+Raw Sensor Window → Measurement Quality Engine → Qualified? ── No → BIS blocked
+                                                        └──── Yes → BIS Digital Twin → Raw BIS Sweep
+```
+
+The engine extracts unit-explicit motion, posture, contact, temperature, and bilateral-integrity features, maps them monotonically to 0–100 engineering subscores, and applies centralized `quality-v1` prototype thresholds. A `MeasurementAttemptService` owns orchestration: rejected windows return no BIS and do not advance the BIS index; qualified windows trigger one synchronized bilateral sweep. This is technical acquisition suitability, not patient health or disease inference.
+
+## BIS signal processing
+
+```text
+Qualified Measurement → Bilateral BIS → Complex Validation → Feature Processor → Processed Feature Snapshot → Phase 6 Baseline
+```
+
+`BISFeatureProcessor` consumes only the acquired qualified sweep. It reconstructs/checks complex R/X values, computes signed bilateral ratios/differences, fits spectral slopes against `log10(frequency_hz)`, and estimates Cole parameters with bounded deterministic optimization over observed R/X residuals. It never imports or receives the digital twin's hidden generating parameters. Processing failure is distinct from acquisition rejection; fitted fields remain explicitly unavailable when a fit fails.
+
+## Personalized baseline and scenarios
+
+```text
+Processed Features → Baseline Calibration → Robust Personal Distribution → Signed Baseline Comparison
+Authoritative Simulation Time → Scenario Engine → Effective Hidden Cole Parameters → BIS Twin → normal pipeline
+```
+
+The baseline engine accepts only qualified processed snapshots and enforces `bis-features-v1`. The scenario provider is an input-layer dependency of the BIS source; it alters effective Cole parameters by simulated time, but never imports signal-processing or baseline-comparison structures. Scenario truth is exposed only by its engineering control API.
+
+## TinyML and TFLite inference
+
+```text
+Qualified processed features → Phase 6 robust normalization → fixed 34-value ML vector
+Baseline-stable corpus → deterministic autoencoder training → Keras/float32 TFLite/INT8 TFLite
+Qualified attempt + READY baseline → verified INT8 LiteRT interpreter → reconstruction MSE → model novelty
+```
+
+The ML adapter is versioned `aequor-ml-input-v1` and clips normalized values to the configured bounded range. Training uses baseline-stable observations only and never receives scenario type or severity. Runtime loads the INT8 artifact once, verifies its SHA-256 metadata, reads tensor quantization parameters, quantizes input, invokes the TFLite interpreter, dequantizes output, and computes reconstruction error. There is no Keras fallback or synthetic score: missing, corrupt, or incompatible artifacts yield `ML INFERENCE UNAVAILABLE` and subsystem `ERROR`.
 
 ## Frontend modules
 

@@ -15,6 +15,7 @@ export interface SystemStatus {
   quality_engine: SubsystemStatus;
   signal_processing: SubsystemStatus;
   baseline_engine: SubsystemStatus;
+  scenario_engine: SubsystemStatus;
   ml_engine: SubsystemStatus;
   temporal_engine: SubsystemStatus;
   confounder_engine: SubsystemStatus;

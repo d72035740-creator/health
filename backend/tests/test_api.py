@@ -28,17 +28,14 @@ def test_system_status_schema_and_explicit_unimplemented_states() -> None:
     assert body["digital_patient_engine"] == "READY"
     assert body["data_provenance"] == "SIMULATED"
 
-    future_engines = {
-            "digital_twin",
-        "quality_engine",
-        "signal_processing",
-        "baseline_engine",
-        "ml_engine",
-        "temporal_engine",
-        "confounder_engine",
-        "decision_engine",
-    }
-    assert all(body[name] == "NOT_IMPLEMENTED" for name in future_engines)
+    assert body["digital_twin"] == "NOT_IMPLEMENTED"
+    assert body["temporal_engine"] == "READY"
+    assert body["confounder_engine"] == "READY"
+    assert body["decision_engine"] == "READY"
+    assert body["quality_engine"] == "READY"
+    assert body["ml_engine"] == "READY"
+    assert body["baseline_engine"] == body["scenario_engine"] == "READY"
+    assert body["signal_processing"] == "READY"
     assert body["virtual_imu"] == body["virtual_temperature"] == body["virtual_contact"] == "READY"
 
 

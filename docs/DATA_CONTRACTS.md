@@ -72,7 +72,31 @@ The optional bounded noise layer only alters the complex R/X components. Magnitu
 
 `BandSensorWindow` stores modality sample rates and three raw sequences: `IMUSample` (local time, acceleration in `m_s2`, angular velocity in `rad_s`, coherent roll/pitch/yaw in degrees), `TemperatureSample` (local time and skin `temperature_c`), and `ContactSample` (local time and `contact_impedance_ohm`). Local timestamps run from 0 to the configured duration and never advance the global simulation clock. `RAW_UNQUALIFIED` only marks the raw stage; it is not an acceptance, rejection, or quality score.
 
+## Measurement quality contracts
+
+`MeasurementQualityAssessment` records `window_id`, `window_index`, `provenance`, `qualification` (`QUALIFIED` or `REJECTED`), `overall_score`, five 0–100 `QualityDimensionScores`, per-arm `QualityFeatureSummary`, structured `RejectionReason` values, evaluation metadata, and the versioned quality-engine/threshold revision. Scores describe technical acquisition conditions only.
+
+`MeasurementAttempt` contains the sensor window, quality assessment, and nullable `bis_sweep`. The invariant is strict: rejected means `bis_sweep = null`; qualified means a synchronized bilateral BIS sweep exists. `quality-v1` thresholds are prototype engineering thresholds, not clinical cutoffs.
+
+## Processed BIS feature contracts
+
+`ProcessedBioimpedanceFeatures` is a named, versioned (`bis-features-v1`) processed snapshot containing the measurement-attempt and sweep identities, simulated time, provenance, per-frequency bilateral features, left/right spectral features, Cole-fit results, and technical-quality context. Per-frequency signed features include magnitude ratio, natural-log ratio, resistance ratio, reactance difference in ohms, phase difference in degrees, and normalized magnitude difference. Spectral slopes are ordinary least-squares slopes of each arm's magnitude or resistance against `log10(frequency_hz)`.
+
+`ColeFitResult` reports `fit_success`, nullable `r0_ohm`, `rinf_ohm`, `tau_seconds`, `beta`, and complex R/X `complex_rmse_ohm`; it never substitutes zero for unavailable parameters. `to_ml_vector()` has explicit fixed ordering and excludes fit-dependent fields. These transformations are engineering features, not clinical biomarkers or anomaly scores.
+
+## Baseline and scenario contracts
+
+`PersonalizedBaselineSnapshot` records lifecycle (`UNINITIALIZED`, `CALIBRATING`, `READY`), revisions, observation count/span, and robust `BaselineFeatureStatistics` (count, median, MAD, Q1, Q3, IQR, robust scale). `BaselineComparison` returns current value, personal median, robust scale, and signed normalized delta per feature; it is not an anomaly or risk score.
+
+`ScenarioType` values are synthetic engineering presets (`BASELINE_STABLE`, systemic, transient, slow, rapid, and recovery variants). Scenario state exposes type, affected arm, authoritative start/elapsed time, progression severity in [0,1], and `scenario-v1`. Effective physiology remains internal to the digital-twin input boundary; scenario fields do not enter processed features or baseline statistics.
+
+## ML contracts
+
+`MLInputVector` is the fixed, ordered 34-value adapter (`aequor-ml-input-v1`) produced from `ProcessedBioimpedanceFeatures` and normalized with the exact `baseline-v1` median/robust-scale values. Values are clipped before model execution. `MLInferenceResult` records runtime/model revisions, reconstruction MSE, model novelty score, latency, tensor dimensions, artifact size, provenance, and an explicit error when inference is unavailable. It is only populated for qualified attempts with a READY baseline and a loaded, hash-verified INT8 TFLite artifact. The score is model novelty, never disease probability, risk, temporal persistence, or a clinical decision; scenario truth is excluded from both the vector and comparison calculation.
+
 ## Data-stage separation
+
+`TemporalObservation` stores only eligible observed ML outputs and authoritative simulated timestamps. `TemporalAssessment` exposes time-aware EWMA, cumulative engineering CUSUM, persistence duration, recent simulated-time slope, and non-clinical temporal evidence state. `ConfounderAssessment` exposes bounded bilateral coherence, unilateral asymmetry, observed dominant side, temperature/technical residual evidence, transient evidence, and deterministic explanation codes. Neither contract contains scenario truth, diagnosis, risk, ADI, or a final surveillance state.
 
 | Stage | Examples | Owner |
 | --- | --- | --- |

@@ -8,6 +8,7 @@ from app.simulation.bioimpedance.cole import ColeImpedanceModel
 from app.simulation.bioimpedance.models import InstrumentationNoiseConfiguration
 from app.simulation.bioimpedance.noise import BoundedComplexInstrumentationNoise
 from app.simulation.random_source import SimulationRandom
+from collections.abc import Callable
 
 
 class DigitalTwinBioimpedanceSource:
@@ -19,12 +20,14 @@ class DigitalTwinBioimpedanceSource:
         frequencies_hz: list[float],
         noise_configuration: InstrumentationNoiseConfiguration,
         random_source: SimulationRandom,
+        parameter_provider: Callable[[ArmSide, datetime, object], object] | None = None,
     ) -> None:
         self._arm_side = arm_side
         self._model = model
         self._frequencies_hz = frequencies_hz
         self._noise = BoundedComplexInstrumentationNoise(noise_configuration)
         self._random_source = random_source
+        self._parameter_provider = parameter_provider
 
     def acquire_sweep(
         self,
@@ -40,7 +43,10 @@ class DigitalTwinBioimpedanceSource:
         namespace = f"bioimpedance.{arm_side.value.lower()}.sweep.{sweep_index}"
         rng = random.Random(self._random_source.derive_seed(namespace))
         points: list[BioimpedanceFrequencyPoint] = []
-        for ideal in self._model.sweep(self._frequencies_hz):
+        model = self._model
+        if self._parameter_provider is not None:
+            model = ColeImpedanceModel(self._parameter_provider(arm_side, simulated_time, self._model.parameters))
+        for ideal in model.sweep(self._frequencies_hz):
             acquired = self._noise.apply(ideal.impedance_ohm, rng=rng)
             points.append(
                 BioimpedanceFrequencyPoint(
@@ -59,4 +65,3 @@ class DigitalTwinBioimpedanceSource:
             simulated_time=simulated_time,
             points=points,
         )
-

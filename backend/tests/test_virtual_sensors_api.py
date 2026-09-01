@@ -21,4 +21,5 @@ def test_virtual_sensor_config_and_window_api() -> None:
 def test_system_status_marks_raw_sources_ready_only() -> None:
     with TestClient(app) as client: body = client.get("/api/v1/system/status").json()
     assert body["virtual_imu"] == body["virtual_temperature"] == body["virtual_contact"] == "READY"
-    assert body["quality_engine"] == "NOT_IMPLEMENTED"
+    assert body["quality_engine"] == "READY"
+    assert body["signal_processing"] == "READY"

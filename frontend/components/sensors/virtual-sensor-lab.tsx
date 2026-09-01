@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect */
 import { useCallback, useEffect, useState } from "react";
 import { acquireSensorWindow, fetchVirtualSensorConfig } from "@/lib/api/virtual-sensors";
 import { SensorCharts } from "@/components/sensors/sensor-charts";

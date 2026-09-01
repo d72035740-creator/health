@@ -1,2 +1,1 @@
-"""Phase 11 boundary. No confounder reasoning exists in Phase 0."""
-
+from app.confounders.service import confounder_service

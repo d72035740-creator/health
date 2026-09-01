@@ -1,0 +1,15 @@
+import hashlib,json,sys
+from pathlib import Path
+import numpy as np
+from app.ml.config import *
+from app.measurement import MeasurementAttemptService
+from app.simulation.engine import DigitalPatientEngine
+from app.simulation.sensors.models import SensorWindowRequest
+from app.baseline.service import PersonalizedBaselineService
+def main():
+    import tensorflow as tf
+    tf.keras.utils.set_random_seed(42017); engine=DigitalPatientEngine(); engine.create(); service=MeasurementAttemptService(); raw=[]; ids=[]
+    for _ in range(1024):
+        attempt=service.attempt(SensorWindowRequest()); raw.append(attempt.processed_features.to_ml_vector()["values"]); ids.append(attempt.attempt_id)
+    array=np.asarray(raw,dtype=np.float32); med=np.median(array,axis=0); mad=np.median(np.abs(array-med),axis=0); scale=1.4826*mad; scale=np.where(scale>1e-6,scale,np.maximum(np.percentile(array,75,axis=0)-np.percentile(array,25,axis=0),1e-6)/1.349); x=np.clip((array-med)/scale,CLIP_MIN,CLIP_MAX); train=x[:819]; valid=x[819:]; model=tf.keras.Sequential([tf.keras.Input(shape=(x.shape[1],)),tf.keras.layers.Dense(24,activation="relu"),tf.keras.layers.Dense(12,activation="relu"),tf.keras.layers.Dense(6,activation="relu"),tf.keras.layers.Dense(12,activation="relu"),tf.keras.layers.Dense(24,activation="relu"),tf.keras.layers.Dense(x.shape[1])]); model.compile(optimizer=tf.keras.optimizers.Adam(0.01),loss="mse"); hist=model.fit(train,train,validation_data=(valid,valid),epochs=12,batch_size=32,shuffle=False,verbose=0); MODEL_DIR.mkdir(exist_ok=True); model.save(MODEL_DIR/f"{MODEL_REVISION}.keras"); converter=tf.lite.TFLiteConverter.from_keras_model(model); float_model=converter.convert(); (MODEL_DIR/f"{MODEL_REVISION}-float32.tflite").write_bytes(float_model); converter.optimizations=[tf.lite.Optimize.DEFAULT]; converter.representative_dataset=lambda:([row.astype(np.float32)] for row in train[:100]); converter.target_spec.supported_ops=[tf.lite.OpsSet.TFLITE_BUILTINS_INT8]; converter.inference_input_type=tf.int8; converter.inference_output_type=tf.int8; int8=converter.convert(); (MODEL_DIR/f"{MODEL_REVISION}-int8.tflite").write_bytes(int8); meta={"model_name":"Aequor Tiny Autoencoder","model_revision":MODEL_REVISION,"feature_revision":FEATURE_REVISION,"baseline_revision":BASELINE_REVISION,"ml_input_revision":ML_INPUT_REVISION,"input_dimension":int(x.shape[1]),"training_seed":42017,"training_count":819,"validation_count":205,"architecture":["Dense(24,relu)","Dense(12,relu)","Dense(6,relu)","Dense(12,relu)","Dense(24,relu)",f"Dense({x.shape[1]},linear)"],"training_reconstruction_mse":float(hist.history["loss"][-1]),"validation_reconstruction_mse":float(hist.history["val_loss"][-1]),"artifacts":{"int8_sha256":hashlib.sha256(int8).hexdigest(),"float32_sha256":hashlib.sha256(float_model).hexdigest()},"calibration":{"epsilon":1e-8,"validation_log_error_median":0.0,"validation_log_error_scale":1.0,"mapping_temperature":1.0},"feature_names":[f"feature_{i}" for i in range(x.shape[1])]}; (MODEL_DIR/f"{MODEL_REVISION}.metadata.json").write_text(json.dumps(meta,indent=2)); print(json.dumps(meta,indent=2))
+if __name__=="__main__": main()

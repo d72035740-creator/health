@@ -1,2 +1,1 @@
-"""Phase 10 boundary. No temporal intelligence exists in Phase 0."""
-
+from app.temporal.service import temporal_service

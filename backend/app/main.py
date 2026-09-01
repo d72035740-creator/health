@@ -10,6 +10,9 @@ from app.api.routes.health import router as health_router
 from app.api.routes.simulation import router as simulation_router
 from app.api.routes.system import router as system_router
 from app.api.routes.virtual_sensors import router as virtual_sensors_router
+from app.api.routes.measurement import router as measurement_router
+from app.api.routes.baseline import router as baseline_router
+from app.api.routes.scenarios import router as scenarios_router
 from app.api.websocket.simulation import router as simulation_websocket_router
 from app.api.websocket.system import router as system_websocket_router
 from app.core.config import get_settings
@@ -62,6 +65,9 @@ async def log_unexpected_errors(request: Request, call_next):  # type: ignore[no
 app.include_router(health_router)
 app.include_router(bioimpedance_router)
 app.include_router(virtual_sensors_router)
+app.include_router(measurement_router)
+app.include_router(baseline_router)
+app.include_router(scenarios_router)
 app.include_router(simulation_router)
 app.include_router(system_router)
 app.include_router(system_websocket_router)

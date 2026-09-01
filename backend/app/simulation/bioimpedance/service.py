@@ -12,6 +12,7 @@ from app.simulation.bioimpedance.models import (
 )
 from app.simulation.bioimpedance.source import DigitalTwinBioimpedanceSource
 from app.simulation.engine import DigitalPatientEngine, simulation_engine
+from app.scenario import scenario_provider
 
 
 class BioimpedanceUnavailableError(RuntimeError):
@@ -36,6 +37,7 @@ class BilateralBioimpedanceService:
             frequencies_hz=self._configuration.frequencies_hz,
             noise_configuration=self._configuration.noise,
             random_source=engine.random_source,
+            parameter_provider=scenario_provider.effective_parameters,
         )
         self._right_source = right_source or DigitalTwinBioimpedanceSource(
             arm_side=ArmSide.RIGHT,
@@ -43,6 +45,7 @@ class BilateralBioimpedanceService:
             frequencies_hz=self._configuration.frequencies_hz,
             noise_configuration=self._configuration.noise,
             random_source=engine.random_source,
+            parameter_provider=scenario_provider.effective_parameters,
         )
         self._sweep_index = 0
         engine.register_reset_hook(self.reset)
@@ -86,4 +89,3 @@ class BilateralBioimpedanceService:
 
 
 bioimpedance_service = BilateralBioimpedanceService(engine=simulation_engine)
-

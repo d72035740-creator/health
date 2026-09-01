@@ -6,6 +6,11 @@ import { StatusCard } from "@/components/system/status-card";
 import { BioimpedanceTwinPanel } from "@/components/bioimpedance/bioimpedance-twin-panel";
 import { DigitalPatientPanel } from "@/components/system/digital-patient-panel";
 import { VirtualSensorLab } from "@/components/sensors/virtual-sensor-lab";
+import { MeasurementQualityPanel } from "@/components/measurement/measurement-quality-panel";
+import { BaselineScenarioPanels } from "@/components/baseline/baseline-scenario-panels";
+import { TinyMLInspector } from "@/components/ml/tinyml-inspector";
+import { TemporalConfounderPanels } from "@/components/temporal/temporal-confounder-panels";
+import { DecisionRuntimePanel } from "@/components/decision/decision-runtime-panel";
 import { fetchSystemStatus } from "@/lib/api/system";
 import type { ConnectionState, SystemHeartbeat, SystemStatus } from "@/lib/types/system";
 import { connectSystemSocket } from "@/lib/websocket/system-socket";
@@ -59,7 +64,7 @@ export function SystemDashboard() {
     { label: "Digital Patient", status: futureStatus(status?.digital_patient_engine), detail: "Authoritative synthetic identity and simulation clock." },
     { label: "Bioimpedance Twin", status: futureStatus(status?.bioimpedance_digital_twin), detail: "Synchronized synthetic Cole-model acquisition is ready." },
     { label: "Virtual Sensors", status: futureStatus(status?.virtual_imu), detail: "Bilateral raw IMU, skin temperature, and contact sensing are ready." },
-    { label: "Quality Engine", status: futureStatus(status?.quality_engine), detail: "Measurement-quality algorithms are reserved for Phase 4." },
+    { label: "Quality Engine", status: futureStatus(status?.quality_engine), detail: "Technical acquisition quality and BIS gating are ready." },
     { label: "Edge AI", status: futureStatus(status?.ml_engine), detail: "No model, inference score, or clinical decision exists." },
   ];
 
@@ -82,6 +87,11 @@ export function SystemDashboard() {
       <DigitalPatientPanel />
       <BioimpedanceTwinPanel backendConnected={backendConnected} />
       <VirtualSensorLab backendConnected={backendConnected} />
+      <MeasurementQualityPanel backendConnected={backendConnected} />
+      <BaselineScenarioPanels backendConnected={backendConnected} />
+      <TinyMLInspector backendConnected={backendConnected} />
+      <TemporalConfounderPanels backendConnected={backendConnected} />
+      <DecisionRuntimePanel backendConnected={backendConnected} />
 
       <div className="mt-12 flex items-center justify-between border-b border-[var(--line)] pb-4 sm:mt-16">
         <h2 className="text-xs font-semibold uppercase tracking-[0.22em] text-[#b7cbc8]">System readiness</h2>
