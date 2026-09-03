@@ -110,4 +110,18 @@ The types are separate so raw observations cannot be mistaken for derived result
 
 ## Validation behavior
 
+## Product view contracts
+
+`PatientViewSnapshot` contains conservative state copy, calibration progress, a dimensionless bilateral presentation metric, recent pattern trend, simple measurement-use language, and a privacy summary. `PatientTrendPoint` is derived from observed personal-baseline comparisons and contains no raw impedance or ML output. `PatientMeasurementSummary` distinguishes qualified and skipped attempts.
+
+`ClinicianViewSnapshot` adds ADI components/modifiers, observed dominant side, selected bilateral and spectral evidence, temporal and confounder summaries, explanations, state history, and compact model provenance. `ClinicianTrendPoint` derives from authoritative runtime history. Neither presentation contract contains scenario type, severity, affected-arm ground truth, hidden Cole parameters, diagnosis, or disease probability.
+
+`EngineeringViewSnapshot` projects authoritative pipeline stages, acquisition quality, simulated BIS, processed features, baseline state, verified TinyML metadata/inference, temporal history, confounder evidence, decision configuration, subsystem health, and explicit simulated-versus-executable provenance.
+
+`LabViewSnapshot` is an engineering projection permitted to contain scenario ID/type, configured side, and progression. It places this ground truth beside independently observed runtime evidence. Scenario fields remain forbidden from feature, ML, temporal, confounder, decision, patient, and clinician contracts.
+
+`DigitalTwinInspectorSnapshot` is an additional engineering-only contract permitted to expose ground truth. It contains `DigitalTwinArmParameters`, additive `DigitalTwinParameterModifier` values, read-only `DigitalTwinEvolutionPoint` previews, ideal `DigitalTwinSpectrumPoint` series, an optional latest acquired noisy sweep, `DigitalTwinFitComparison` rows, and a compact `VirtualSensorInspectorSummary`. Its hidden values are presentation-only and are not inputs to processing or intelligence services.
+
+`AequorTimelineEvent` stores a monotonic sequence index, authoritative simulated time, event/source provenance, and deep-copied nullable summaries for measurement, ML, temporal, confounder, and decision evidence. Scenario ground truth is nullable and engineering-only. `ReplaySession` describes the current reset boundary; `TimelineReplaySnapshot` contains ordered events, recorded trend series, and decision-derived state bands. With `include_ground_truth=false`, scenario events are omitted and every remaining ground-truth field is null. Replay projection never recomputes historical evidence.
+
 Contracts reject unknown fields, invalid enum members, impossible normalized-score ranges, non-positive frequencies and speed multipliers, invalid phase ranges, and inconsistent impedance magnitude. These checks enforce structural integrity only and are not medical validation.

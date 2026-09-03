@@ -9,6 +9,7 @@ htmlcov/
 # Node / Next.js
 node_modules/
 .next/
+.next-*/
 out/
 *.tsbuildinfo
 
@@ -19,4 +20,3 @@ out/
 .vscode/
 .DS_Store
 Thumbs.db
-

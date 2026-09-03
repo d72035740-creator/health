@@ -3,8 +3,8 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Aequor Health | Simulation Prototype",
-  description: "Phase 0 system foundation for Aequor Health.",
+  title: "Aequor Health | Personalized Surveillance Prototype",
+  description: "Patient and clinician product views for the Aequor Health simulation prototype.",
 };
 
 
@@ -15,4 +15,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-

@@ -5,6 +5,8 @@ from fastapi import APIRouter, HTTPException, status
 from app.simulation.clock import SimulationLifecycleError, SimulationValueError
 from app.simulation.engine import simulation_engine
 from app.simulation.models import ManualStepRequest, SimulationSnapshot, SpeedUpdate
+from app.timeline.models import TimelineEventSource, TimelineEventType
+from app.timeline.service import timeline_service
 
 
 router = APIRouter(prefix="/api/v1/simulation", tags=["simulation"])
@@ -67,5 +69,6 @@ async def update_speed(request: SpeedUpdate) -> SimulationSnapshot:
 
 @router.post("/step", response_model=SimulationSnapshot)
 async def step_simulation(request: ManualStepRequest) -> SimulationSnapshot:
-    return _perform(lambda: simulation_engine.step(request.seconds))
-
+    snapshot = _perform(lambda: simulation_engine.step(request.seconds))
+    timeline_service.append(TimelineEventType.SIMULATION_TIME_ADVANCED,TimelineEventSource.SIMULATION_CONTROL,"Simulation time advanced",f"Advanced authoritative simulated time by {request.seconds:g} seconds.",simulated_time=snapshot.simulated_time)
+    return snapshot

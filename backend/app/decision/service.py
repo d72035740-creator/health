@@ -16,11 +16,14 @@ class DecisionService:
    if uni>.5: codes.append('UNILATERAL_PATTERN_DOMINANT')
    if systemic>.6: codes.append('SYSTEMIC_PATTERN_REDUCES_UNILATERAL_EVIDENCE')
    if transient>.5: codes.append('TRANSIENT_PATTERN_REDUCES_PERSISTENCE_EVIDENCE')
-   snap=self._snapshot(attempt.simulated_time,adi,{'personalized_deviation':pd,'ml_novelty':ml,'temporal':temporal,'unilateral_pattern':uni},{'systemic':systemic,'transient':transient,'residual_technical':tech},attempt,state,codes); self._latest=snap; return snap
+   snap=self._snapshot(attempt.simulated_time,adi,{'personalized_deviation':pd,'ml_novelty':ml,'temporal':temporal,'unilateral_pattern':uni},{'systemic':systemic,'transient':transient,'residual_technical':tech},attempt,state,codes); self._latest=snap; self._history.append(snap); return snap
  def _next(self,adi,t):
   persistent=t and t.temporal_state.value in ('SUSTAINED_ELEVATION','RISING_PERSISTENT_PATTERN') and t.elevated_observation_count>=3 and t.persistence_duration_days>=2
   if adi>=REVIEW and persistent and t.persistence_duration_days>=MIN_REVIEW_DAYS and t.observation_count>=MIN_REVIEW_COUNT: return SurveillanceState.CLINICAL_REVIEW_RECOMMENDED
   if adi>=PERSISTENT and persistent:return SurveillanceState.PERSISTENT_DEVIATION
+  if self._state is SurveillanceState.CLINICAL_REVIEW_RECOMMENDED and adi>=EXIT_PERSISTENT and persistent: return SurveillanceState.PERSISTENT_DEVIATION
+  if self._state is SurveillanceState.PERSISTENT_DEVIATION and adi>=EXIT_PERSISTENT and persistent: return SurveillanceState.PERSISTENT_DEVIATION
+  if self._state is SurveillanceState.OBSERVING_CHANGE and adi>=EXIT_OBSERVE: return SurveillanceState.OBSERVING_CHANGE
   if adi>=OBSERVE:return SurveillanceState.OBSERVING_CHANGE
   return SurveillanceState.WITHIN_PERSONAL_BASELINE
  def _snapshot(self,time,adi,components,modifiers,attempt,state=None,codes=None):

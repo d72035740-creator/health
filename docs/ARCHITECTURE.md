@@ -109,6 +109,38 @@ Qualified attempt + READY baseline → verified INT8 LiteRT interpreter → reco
 
 The ML adapter is versioned `aequor-ml-input-v1` and clips normalized values to the configured bounded range. Training uses baseline-stable observations only and never receives scenario type or severity. Runtime loads the INT8 artifact once, verifies its SHA-256 metadata, reads tensor quantization parameters, quantizes input, invokes the TFLite interpreter, dequantizes output, and computes reconstruction error. There is no Keras fallback or synthetic score: missing, corrupt, or incompatible artifacts yield `ML INFERENCE UNAVAILABLE` and subsystem `ERROR`.
 
+## Product presentation services
+
+```text
+Integrated Runtime → PatientViewService → /patient
+                  └→ ClinicianViewService → /clinician
+```
+
+The backend owns both audience projections. `PatientViewSnapshot` deliberately excludes model, temporal-detector, confounder, raw impedance, and scenario details. `ClinicianViewSnapshot` exposes observed evidence and selected technical context, while still excluding scenario truth. Both endpoints are read-only and preserve the distinction between the latest cycle and the last valid surveillance decision. The product routes render these DTOs and never reconstruct the intelligence pipeline in React.
+
+Engineering projections add two explicitly technical audiences:
+
+```text
+Scenario Ground Truth → Hidden Synthetic Physiology → Normal Aequor Pipeline
+Integrated Runtime → EngineeringViewSnapshot
+Simulation + Scenario + Runtime → LabViewSnapshot
+```
+
+There is intentionally no architecture edge from scenario label to ML, temporal, confounder, or decision logic. Only the Lab projection may expose scenario truth; patient and clinician projections remain scenario-blind.
+
+## Digital Twin inspection and recorded replay
+
+`DigitalTwinInspectorSnapshot` is a read-only engineering projection. Base parameters come directly from the Phase-2 configuration, effective and preview parameters pass through the Phase-7 physiology provider, and ideal spectra use the same `ColeImpedanceModel` as acquisition. The projection never advances time or consumes random noise. It places hidden effective parameters beside processor estimates only after the observed sweep has passed through normal acquisition and signal processing.
+
+```text
+Hidden Cole parameters → synthetic BIS → noisy acquired R/X → signal processing → fitted features
+        └──────────────── engineering inspection only ───────────────────────────────┘
+```
+
+`TimelineService` is an append-only in-memory prototype recorder. Simulation/scenario controls and the integrated runtime publish events at the authoritative simulated time. Measurement events deep-copy the evidence that existed during that cycle; `TimelineReplaySnapshot` builds charts and state bands only from those stored copies and never calls ML, temporal, confounder, or decision evaluation. Full reset starts a new retained in-memory replay session. Scenario and temporal resets append boundaries without erasing earlier events in the current session.
+
+The default engineering replay may contain scenario truth. Its observer-only projection removes scenario-engine events and clears ground-truth fields before serialization. Patient and clinician DTOs remain unchanged and scenario-blind.
+
 ## Frontend modules
 
 - `app` owns App Router entry points and global presentation tokens.

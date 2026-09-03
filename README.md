@@ -2,11 +2,11 @@
 
 Aequor Health is a proposed bilateral wearable surveillance platform for detecting persistent physiological changes associated with possible early lymphedema. The eventual system is intended to combine multi-frequency bioimpedance, motion, skin-temperature, and electrode-contact sensing with local Edge-AI processing.
 
-> **Phase 12 + 13 prototype disclaimer:** This repository is not a clinically validated diagnostic system. ADI and surveillance states are prototype research/workflow outputs only; they are not diagnosis, disease risk, or clinical probability.
+> **Phase 18 + 19 prototype disclaimer:** Engineering inspection and replay may expose simulated digital-twin ground truth for comparison. They do not represent physical sensor validation or clinical performance.
 
 ## Current scope
 
-This repository implements **Phase 12 + 13 — Aequor Decision Engine & Integrated Runtime**, while preserving the earlier foundation:
+This repository implements **Phase 18 + 19 — Digital Twin Inspector & Timeline Replay**, while preserving the earlier foundation:
 
 - a Next.js/TypeScript/Tailwind product shell;
 - a FastAPI/Pydantic backend shell;
@@ -32,6 +32,17 @@ This repository implements **Phase 12 + 13 — Aequor Decision Engine & Integrat
 - scenario-blind bilateral/unilateral, temperature, contact, motion, and transient evidence reasoning;
 - explicit ADI components/modifiers, hysteretic surveillance state machine, and deterministic explanations;
 - one authoritative integrated runtime measurement-cycle endpoint;
+- backend-owned, scenario-blind patient and clinician presentation snapshots;
+- a calm mobile-first patient experience and evidence-focused clinician review experience;
+- runtime-refreshed product views with explicit stale-cycle and prototype disclosures;
+- a backend-projected engineering console spanning acquisition through decision evidence;
+- an interactive Aequor Lab that visibly separates scenario ground truth from observed intelligence outputs;
+- judge-friendly baseline, scenario, time, sensor-condition, and runtime-cycle controls;
+- a read-only Digital Twin Inspector backed by the authoritative physiology provider and Cole equation;
+- explicit base/effective/modifier, predicted-vs-acquired, hidden-vs-fitted, sensor, and anti-leakage views;
+- append-only in-memory replay sessions with recorded measurement, ML, temporal, confounder, and decision evidence;
+- a ground-truth toggle whose observer-only backend projection removes scenario events and fields; and
+- replay charts, state bands, rejection markers, and event details without historical algorithm recomputation;
 - structured backend logging and focused tests; and
 - documented boundaries for later phases.
 

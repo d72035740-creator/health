@@ -1,6 +1,6 @@
 # Delivery phases
 
-Phases 0 through 13 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
+Phases 0 through 19 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
 
 | Phase | Name | Status |
 | ---: | --- | --- |
@@ -18,14 +18,12 @@ Phases 0 through 13 are implemented. Every later phase is a roadmap boundary, no
 | 11 | Confounder Reasoning | Implemented |
 | 12 | ADI + Surveillance State Machine | Implemented |
 | 13 | Integrated Runtime | Implemented |
-| 12 | ADI + State Machine | Not implemented |
-| 13 | Main API/Streaming | Not implemented |
-| 14 | Patient UI | Not implemented |
-| 15 | Clinician UI | Not implemented |
-| 16 | Engineering UI | Not implemented |
-| 17 | Aequor Lab | Not implemented |
-| 18 | Digital Twin Inspector | Not implemented |
-| 19 | Timeline Replay | Not implemented |
+| 14 | Patient UI | Implemented |
+| 15 | Clinician UI | Implemented |
+| 16 | Engineering UI | Implemented |
+| 17 | Aequor Lab | Implemented |
+| 18 | Digital Twin Inspector | Implemented |
+| 19 | Timeline Replay | Implemented |
 | 20 | Privacy Inspector | Not implemented |
 | 21 | Adversarial Demo | Not implemented |
 | 22 | Automated Verification | Not implemented |

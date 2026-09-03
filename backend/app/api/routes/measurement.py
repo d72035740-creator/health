@@ -10,7 +10,9 @@ from app.temporal.service import temporal_service
 from app.temporal.config import public_config as temporal_config
 from app.confounders.service import confounder_service
 from app.decision.service import decision_service
-from app.runtime import runtime_service
+from app.runtime import runtime_service, RuntimeBusyError
+from app.timeline.models import TimelineEventSource, TimelineEventType
+from app.timeline.service import timeline_service
 
 router=APIRouter(prefix="/api/v1", tags=["measurement-quality"])
 
@@ -25,7 +27,8 @@ async def temporal_status(): return temporal_service.assessment()
 @router.get('/temporal/history')
 async def temporal_history(): return temporal_service.history()
 @router.post('/temporal/reset')
-async def temporal_reset(): temporal_service.reset(); confounder_service.reset(); return temporal_service.assessment()
+async def temporal_reset():
+ temporal_service.reset(); confounder_service.reset(); timeline_service.append(TimelineEventType.TEMPORAL_RESET,TimelineEventSource.TEMPORAL_ENGINE,'Temporal evidence reset','Temporal service reset; recorded prior replay events were retained.'); return temporal_service.assessment()
 @router.get('/temporal/config')
 async def get_temporal_config(): return temporal_config()
 @router.get('/confounders/config')
@@ -41,11 +44,13 @@ async def decision_latest(): return decision_service.latest()
 @router.get('/runtime/status')
 async def runtime_status(): return runtime_service.status()
 @router.get('/runtime/snapshot')
-async def runtime_snapshot(): return runtime_service._latest
+async def runtime_snapshot(): return runtime_service.snapshot()
 @router.get('/runtime/history')
-async def runtime_history(): return runtime_service._history
+async def runtime_history(): return runtime_service.history()
 @router.post('/runtime/measure')
-async def runtime_measure(request: SensorWindowRequest): return runtime_service.measure(request)
+async def runtime_measure(request: SensorWindowRequest):
+ try: return runtime_service.measure(request)
+ except RuntimeBusyError as error: raise HTTPException(status_code=409,detail={'code':'RUNTIME_BUSY','message':str(error)}) from error
 
 @router.get("/signal-processing/config")
 async def get_signal_processing_config() -> dict[str, object]: return processing_config()
