@@ -1,0 +1,2180 @@
+{
+  "release_verification_revision": "aequor-release-verification-v1",
+  "started_at": "2026-09-08T15:13:40.134397Z",
+  "finished_at": "2026-09-08T15:13:48.749455Z",
+  "git_commit": "423216bba4295668d6fcae79e6b26a5f2ce4a71d",
+  "model_hash": "6f05620f9856ad095cf971d5b8b0fb91f42f32984a6009d7a1eae42065225465",
+  "total_checks": 95,
+  "passed": 95,
+  "failed": 0,
+  "warnings": 0,
+  "skipped": 0,
+  "overall_status": "READY",
+  "sections": [
+    {
+      "section_id": "environment",
+      "title": "Environment and model artifact",
+      "checks": [
+        {
+          "check_id": "environment.python",
+          "title": "Supported Python runtime",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "python": "3.14.3"
+          },
+          "details": "Supported Python runtime",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.file.package.json",
+          "title": "Required file: package.json",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "path": "C:\\Users\\d7203\\OneDrive\\Documents\\ChatGPT\\xyzw\\frontend\\package.json",
+            "exists": true
+          },
+          "details": "Required file: package.json",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.file.package-lock.json",
+          "title": "Required file: package-lock.json",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "path": "C:\\Users\\d7203\\OneDrive\\Documents\\ChatGPT\\xyzw\\frontend\\package-lock.json",
+            "exists": true
+          },
+          "details": "Required file: package-lock.json",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.file.aequor-ae-v1-int8.tflite",
+          "title": "Required file: aequor-ae-v1-int8.tflite",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "path": "C:\\Users\\d7203\\OneDrive\\Documents\\ChatGPT\\xyzw\\models\\aequor-ae-v1-int8.tflite",
+            "exists": true
+          },
+          "details": "Required file: aequor-ae-v1-int8.tflite",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.file.aequor-ae-v1.metadata.json",
+          "title": "Required file: aequor-ae-v1.metadata.json",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "path": "C:\\Users\\d7203\\OneDrive\\Documents\\ChatGPT\\xyzw\\models\\aequor-ae-v1.metadata.json",
+            "exists": true
+          },
+          "details": "Required file: aequor-ae-v1.metadata.json",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.model_hash",
+          "title": "Model SHA-256 matches metadata",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "actual": "6f05620f9856ad095cf971d5b8b0fb91f42f32984a6009d7a1eae42065225465",
+            "expected": "6f05620f9856ad095cf971d5b8b0fb91f42f32984a6009d7a1eae42065225465"
+          },
+          "details": "Model SHA-256 matches metadata",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.model_load",
+          "title": "INT8 model loads",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY",
+            "model_name": "Aequor Tiny Autoencoder",
+            "model_revision": "aequor-ae-v1",
+            "runtime": "TFLITE_INT8",
+            "ml_input_revision": "aequor-ml-input-v1",
+            "feature_revision": "bis-features-v1",
+            "loaded": true,
+            "error": null,
+            "model_size_bytes": 9008
+          },
+          "details": "INT8 model loads",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.tensor_shape",
+          "title": "Model tensor shapes match 34-value adapter",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "input": [
+              1,
+              34
+            ],
+            "output": [
+              1,
+              34
+            ]
+          },
+          "details": "Model tensor shapes match 34-value adapter",
+          "failure_reason": null
+        },
+        {
+          "check_id": "environment.quantization",
+          "title": "INT8 quantization metadata exists",
+          "category": "environment",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "input_quantization": [
+              0.021544575691223145,
+              3
+            ],
+            "output_quantization": [
+              0.018445545807480812,
+              2
+            ]
+          },
+          "details": "INT8 quantization metadata exists",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "services",
+      "title": "Core service readiness",
+      "checks": [
+        {
+          "check_id": "services.digital_patient",
+          "title": "Digital Patient ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Digital Patient ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.bis_digital_twin",
+          "title": "Bis Digital Twin ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Bis Digital Twin ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.virtual_imu",
+          "title": "Virtual Imu ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Virtual Imu ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.virtual_temperature",
+          "title": "Virtual Temperature ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Virtual Temperature ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.virtual_contact",
+          "title": "Virtual Contact ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Virtual Contact ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.quality",
+          "title": "Quality ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Quality ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.signal_processing",
+          "title": "Signal Processing ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Signal Processing ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.baseline",
+          "title": "Baseline ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Baseline ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.scenario",
+          "title": "Scenario ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Scenario ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.ml",
+          "title": "Ml ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Ml ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.temporal",
+          "title": "Temporal ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Temporal ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.confounder",
+          "title": "Confounder ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Confounder ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.decision",
+          "title": "Decision ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "READY"
+          },
+          "details": "Decision ready",
+          "failure_reason": null
+        },
+        {
+          "check_id": "services.runtime",
+          "title": "Integrated runtime ready",
+          "category": "services",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "runtime_name": "Aequor Integrated Runtime",
+            "runtime_revision": "runtime-v1",
+            "ready": true,
+            "latest_cycle": null,
+            "latest_pipeline_status": null,
+            "current_surveillance_state": "CALIBRATING"
+          },
+          "details": "Integrated runtime ready",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "reset",
+      "title": "Deterministic reset",
+      "checks": [
+        {
+          "check_id": "reset.baseline",
+          "title": "Baseline reset",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "state": "UNINITIALIZED"
+          },
+          "details": "Baseline reset",
+          "failure_reason": null
+        },
+        {
+          "check_id": "reset.scenario",
+          "title": "Scenario reset",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "scenario_id": "scenario-0",
+            "scenario_type": "BASELINE_STABLE",
+            "affected_arm": null,
+            "start_simulated_time": null,
+            "elapsed_simulated_time": 0.0,
+            "severity": 0.0,
+            "scenario_revision": "scenario-v1",
+            "scenario_engine_name": "Aequor Longitudinal Scenario Engine",
+            "active": false
+          },
+          "details": "Scenario reset",
+          "failure_reason": null
+        },
+        {
+          "check_id": "reset.temporal",
+          "title": "Temporal history empty",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "count": 0
+          },
+          "details": "Temporal history empty",
+          "failure_reason": null
+        },
+        {
+          "check_id": "reset.decision",
+          "title": "Decision history empty",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "count": 0
+          },
+          "details": "Decision history empty",
+          "failure_reason": null
+        },
+        {
+          "check_id": "reset.runtime",
+          "title": "Runtime history empty",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "count": 0
+          },
+          "details": "Runtime history empty",
+          "failure_reason": null
+        },
+        {
+          "check_id": "reset.indices",
+          "title": "Acquisition indices reset",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "sweep_index": 0,
+            "window_index": 0
+          },
+          "details": "Acquisition indices reset",
+          "failure_reason": null
+        },
+        {
+          "check_id": "reset.reproducible",
+          "title": "Startup sequence reproduces deterministically",
+          "category": "reset",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "runs": [
+              [
+                470.64156631490414,
+                -105.10414820148436,
+                82.60847730544603
+              ],
+              [
+                470.64156631490414,
+                -105.10414820148436,
+                82.60847730544603
+              ]
+            ]
+          },
+          "details": "Startup sequence reproduces deterministically",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "baseline",
+      "title": "Baseline calibration",
+      "checks": [
+        {
+          "check_id": "baseline.ready",
+          "title": "Baseline reaches READY",
+          "category": "baseline",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "state": "READY",
+            "baseline_engine_name": "Aequor Personalized Baseline Engine",
+            "baseline_revision": "baseline-v1",
+            "feature_revision": "bis-features-v1",
+            "observation_count": 28,
+            "minimum_observations": 28,
+            "simulated_span_seconds": 648000.0,
+            "minimum_simulated_span_seconds": 604800.0,
+            "statistics": [
+              {
+                "name": "magnitude_ratio_5000hz",
+                "count": 28,
+                "median": 1.0251838214735787,
+                "mad": 0.0008583937717191459,
+                "q1": 1.0243254277018594,
+                "q3": 1.0259605081475573,
+                "iqr": 0.001635080445697934,
+                "robust_scale": 0.0012726546059508056
+              },
+              {
+                "name": "log_magnitude_ratio_5000hz",
+                "count": 28,
+                "median": 0.024871932164153572,
+                "mad": 0.0008376556008998139,
+                "q1": 0.024034276563253756,
+                "q3": 0.02562924044034412,
+                "iqr": 0.0015949638770903635,
+                "robust_scale": 0.0012419081938940641
+              },
+              {
+                "name": "phase_difference_deg_5000hz",
+                "count": 28,
+                "median": -0.05097023635434628,
+                "mad": 0.015541105828968504,
+                "q1": -0.07090517490978065,
+                "q3": -0.04128918927067193,
+                "iqr": 0.02961598563910872,
+                "robust_scale": 0.023041243502028703
+              },
+              {
+                "name": "normalized_magnitude_difference_5000hz",
+                "count": 28,
+                "median": 0.024870650038929937,
+                "mad": 0.000837530352403559,
+                "q1": 0.024033119686526376,
+                "q3": 0.025627837449371388,
+                "iqr": 0.0015947177628450118,
+                "robust_scale": 0.0012417225004735166
+              },
+              {
+                "name": "magnitude_ratio_10000hz",
+                "count": 28,
+                "median": 1.0234112169431915,
+                "mad": 0.0008700697599618445,
+                "q1": 1.0226988205021292,
+                "q3": 1.024412912686048,
+                "iqr": 0.001714092183918714,
+                "robust_scale": 0.0012899654261194307
+              },
+              {
+                "name": "log_magnitude_ratio_10000hz",
+                "count": 28,
+                "median": 0.02314137749947494,
+                "mad": 0.0008500960810153349,
+                "q1": 0.022445032974263056,
+                "q3": 0.02411967934104933,
+                "iqr": 0.0016746463667862733,
+                "robust_scale": 0.0012603524497133355
+              },
+              {
+                "name": "phase_difference_deg_10000hz",
+                "count": 28,
+                "median": -0.26719434364253747,
+                "mad": 0.025860442439395115,
+                "q1": -0.2935382548918639,
+                "q3": -0.2501871999674359,
+                "iqr": 0.043351054924428034,
+                "robust_scale": 0.0383406919606472
+              },
+              {
+                "name": "normalized_magnitude_difference_10000hz",
+                "count": 28,
+                "median": 0.02314034482232955,
+                "mad": 0.0008499814154971207,
+                "q1": 0.022444090714292934,
+                "q3": 0.024118510076578635,
+                "iqr": 0.0016744193622857013,
+                "robust_scale": 0.0012601824466160311
+              },
+              {
+                "name": "magnitude_ratio_20000hz",
+                "count": 28,
+                "median": 1.0194207732864795,
+                "mad": 0.0009483632902204109,
+                "q1": 1.0184041290507233,
+                "q3": 1.0203446387554966,
+                "iqr": 0.00194050970477333,
+                "robust_scale": 0.001406043414080781
+              },
+              {
+                "name": "log_magnitude_ratio_20000hz",
+                "count": 28,
+                "median": 0.019234596295583342,
+                "mad": 0.0009298641293524097,
+                "q1": 0.018236822177940558,
+                "q3": 0.020140451151015298,
+                "iqr": 0.0019036289730747398,
+                "robust_scale": 0.0013786165581778826
+              },
+              {
+                "name": "phase_difference_deg_20000hz",
+                "count": 28,
+                "median": -0.3355883244613027,
+                "mad": 0.011488574602890544,
+                "q1": -0.34512586890472097,
+                "q3": -0.3237068326404948,
+                "iqr": 0.021419036264226143,
+                "robust_scale": 0.01703296070624552
+              },
+              {
+                "name": "normalized_magnitude_difference_20000hz",
+                "count": 28,
+                "median": 0.019234003295775435,
+                "mad": 0.0009297739085604301,
+                "q1": 0.018236316753889894,
+                "q3": 0.02013977036588037,
+                "iqr": 0.001903453611990475,
+                "robust_scale": 0.0013784827968316936
+              },
+              {
+                "name": "magnitude_ratio_50000hz",
+                "count": 28,
+                "median": 1.014095261282497,
+                "mad": 0.0007260553761602173,
+                "q1": 1.0135138162694304,
+                "q3": 1.015503114180508,
+                "iqr": 0.0019892979110776032,
+                "robust_scale": 0.0010764497006951381
+              },
+              {
+                "name": "log_magnitude_ratio_50000hz",
+                "count": 28,
+                "median": 0.013996846646536457,
+                "mad": 0.0007159705797492337,
+                "q1": 0.013423316851402887,
+                "q3": 0.015384168655154235,
+                "iqr": 0.001960851803751348,
+                "robust_scale": 0.0010614979815362139
+              },
+              {
+                "name": "phase_difference_deg_50000hz",
+                "count": 28,
+                "median": -0.23667185032979043,
+                "mad": 0.009177812592219503,
+                "q1": -0.24592865923064622,
+                "q3": -0.22749403773757093,
+                "iqr": 0.018434621493075287,
+                "robust_scale": 0.013607024949224635
+              },
+              {
+                "name": "normalized_magnitude_difference_50000hz",
+                "count": 28,
+                "median": 0.013996618137791962,
+                "mad": 0.0007159355322470494,
+                "q1": 0.013423115283088313,
+                "q3": 0.015383865244478248,
+                "iqr": 0.001960749961389936,
+                "robust_scale": 0.0010614460201094755
+              },
+              {
+                "name": "magnitude_ratio_100000hz",
+                "count": 28,
+                "median": 1.0128022017827245,
+                "mad": 0.0009745313987182813,
+                "q1": 1.0117762673986546,
+                "q3": 1.0137357956353994,
+                "iqr": 0.001959528236744834,
+                "robust_scale": 0.0014448402517397239
+              },
+              {
+                "name": "log_magnitude_ratio_100000hz",
+                "count": 28,
+                "median": 0.012720946359782267,
+                "mad": 0.0009622516528743534,
+                "q1": 0.011707466719039694,
+                "q3": 0.013642314645514863,
+                "iqr": 0.001934847926475169,
+                "robust_scale": 0.0014266343005515164
+              },
+              {
+                "name": "phase_difference_deg_100000hz",
+                "count": 28,
+                "median": -0.13191229623822753,
+                "mad": 0.004262889024659877,
+                "q1": -0.13667728077733976,
+                "q3": -0.12764940721356766,
+                "iqr": 0.009027873563772104,
+                "robust_scale": 0.006320159267960733
+              },
+              {
+                "name": "normalized_magnitude_difference_100000hz",
+                "count": 28,
+                "median": 0.012720774817960499,
+                "mad": 0.0009622128978870204,
+                "q1": 0.011707332997084704,
+                "q3": 0.013642103065395067,
+                "iqr": 0.0019347700683103632,
+                "robust_scale": 0.0014265768424072964
+              },
+              {
+                "name": "magnitude_ratio_200000hz",
+                "count": 28,
+                "median": 1.0126636993960068,
+                "mad": 0.0011337291469823985,
+                "q1": 1.0117033035631464,
+                "q3": 1.014168654537344,
+                "iqr": 0.0024653509741976443,
+                "robust_scale": 0.0016808668333161039
+              },
+              {
+                "name": "log_magnitude_ratio_200000hz",
+                "count": 28,
+                "median": 0.012584179110228657,
+                "mad": 0.0011196039349777448,
+                "q1": 0.01163534915581078,
+                "q3": 0.014069217200584305,
+                "iqr": 0.002433868044773524,
+                "robust_scale": 0.0016599247939980044
+              },
+              {
+                "name": "phase_difference_deg_200000hz",
+                "count": 28,
+                "median": -0.061588543596011514,
+                "mad": 0.005070646617547414,
+                "q1": -0.06640371774859877,
+                "q3": -0.05579355820121168,
+                "iqr": 0.010610159547387088,
+                "robust_scale": 0.007517740675175796
+              },
+              {
+                "name": "normalized_magnitude_difference_200000hz",
+                "count": 28,
+                "median": 0.012584013002768703,
+                "mad": 0.0011195598244830175,
+                "q1": 0.011635217887664018,
+                "q3": 0.01406898512928808,
+                "iqr": 0.002433767241624061,
+                "robust_scale": 0.0016598593957785216
+              },
+              {
+                "name": "left_low_high_magnitude_ratio",
+                "count": 28,
+                "median": 1.5121232651475636,
+                "mad": 0.0012798847800020718,
+                "q1": 1.5108433803675614,
+                "q3": 1.5134476065109943,
+                "iqr": 0.0026042261434329195,
+                "robust_scale": 0.0018975571748310715
+              },
+              {
+                "name": "left_low_high_resistance_ratio",
+                "count": 28,
+                "median": 1.4778358735438875,
+                "mad": 0.001349990052238459,
+                "q1": 1.4764426653202314,
+                "q3": 1.4791327365917064,
+                "iqr": 0.0026900712714750252,
+                "robust_scale": 0.0020014952514487393
+              },
+              {
+                "name": "left_magnitude_log_frequency_slope_ohm_per_log10_hz",
+                "count": 28,
+                "median": -100.58200379233969,
+                "mad": 0.14971062426462822,
+                "q1": -100.715186754136,
+                "q3": -100.42483219153227,
+                "iqr": 0.2903545626037243,
+                "robust_scale": 0.2219609715347378
+              },
+              {
+                "name": "left_resistance_log_frequency_slope_ohm_per_log10_hz",
+                "count": 28,
+                "median": -92.60691528089282,
+                "mad": 0.14754952053584702,
+                "q1": -92.75150267971227,
+                "q3": -92.4452228578659,
+                "iqr": 0.30627982184637403,
+                "robust_scale": 0.2187569191464468
+              },
+              {
+                "name": "left_phase_range_deg",
+                "count": 28,
+                "median": 10.083794397729028,
+                "mad": 0.011971547016807804,
+                "q1": 10.07202079853586,
+                "q3": 10.097905297809206,
+                "iqr": 0.025884499273345796,
+                "robust_scale": 0.01774901560711925
+              },
+              {
+                "name": "right_low_high_magnitude_ratio",
+                "count": 28,
+                "median": 1.4937503666843612,
+                "mad": 0.0009227036220362805,
+                "q1": 1.4929607179856776,
+                "q3": 1.4949828918518508,
+                "iqr": 0.0020221738661732047,
+                "robust_scale": 0.0013680003900309894
+              },
+              {
+                "name": "right_low_high_resistance_ratio",
+                "count": 28,
+                "median": 1.460020046770194,
+                "mad": 0.0008517613231658894,
+                "q1": 1.4592619942825031,
+                "q3": 1.461356735679361,
+                "iqr": 0.0020947413968579465,
+                "robust_scale": 0.0012628213377257475
+              },
+              {
+                "name": "right_magnitude_log_frequency_slope_ohm_per_log10_hz",
+                "count": 28,
+                "median": -95.45015001487654,
+                "mad": 0.14515546650410727,
+                "q1": -95.65605973863674,
+                "q3": -95.35413839524155,
+                "iqr": 0.3019213433951933,
+                "robust_scale": 0.21520749463898942
+              },
+              {
+                "name": "right_resistance_log_frequency_slope_ohm_per_log10_hz",
+                "count": 28,
+                "median": -87.84251424091227,
+                "mad": 0.153012441201561,
+                "q1": -88.05013281171392,
+                "q3": -87.7397976546153,
+                "iqr": 0.3103351570986206,
+                "robust_scale": 0.2268562453254343
+              },
+              {
+                "name": "right_phase_range_deg",
+                "count": 28,
+                "median": 9.877068103817082,
+                "mad": 0.014133835435815811,
+                "q1": 9.860785499958435,
+                "q3": 9.889871370334346,
+                "iqr": 0.02908587037591026,
+                "robust_scale": 0.02095482441714052
+              }
+            ]
+          },
+          "details": "Baseline reaches READY",
+          "failure_reason": null
+        },
+        {
+          "check_id": "baseline.count",
+          "title": "Exactly 28 qualified observations enrolled",
+          "category": "baseline",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "count": 28
+          },
+          "details": "Exactly 28 qualified observations enrolled",
+          "failure_reason": null
+        },
+        {
+          "check_id": "baseline.span",
+          "title": "Minimum simulated span satisfied",
+          "category": "baseline",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "actual": 648000.0,
+            "minimum": 604800.0
+          },
+          "details": "Minimum simulated span satisfied",
+          "failure_reason": null
+        },
+        {
+          "check_id": "baseline.revisions",
+          "title": "Feature and baseline revisions match",
+          "category": "baseline",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "feature": "bis-features-v1",
+            "baseline": "baseline-v1"
+          },
+          "details": "Feature and baseline revisions match",
+          "failure_reason": null
+        },
+        {
+          "check_id": "baseline.scenario",
+          "title": "Calibration remained baseline-stable",
+          "category": "baseline",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "scenario_id": "scenario-0",
+            "scenario_type": "BASELINE_STABLE",
+            "affected_arm": null,
+            "start_simulated_time": null,
+            "elapsed_simulated_time": 0.0,
+            "severity": 0.0,
+            "scenario_revision": "scenario-v1",
+            "scenario_engine_name": "Aequor Longitudinal Scenario Engine",
+            "active": false
+          },
+          "details": "Calibration remained baseline-stable",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "stable",
+      "title": "Baseline-stable complete path",
+      "checks": [
+        {
+          "check_id": "stable.quality",
+          "title": "Stable path produces quality",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces quality",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.bis",
+          "title": "Stable path produces bis",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces bis",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.features",
+          "title": "Stable path produces features",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces features",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.baseline_comparison",
+          "title": "Stable path produces baseline_comparison",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces baseline_comparison",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.tflite",
+          "title": "Stable path produces tflite",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces tflite",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.temporal",
+          "title": "Stable path produces temporal",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces temporal",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.confounder",
+          "title": "Stable path produces confounder",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces confounder",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.decision",
+          "title": "Stable path produces decision",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "available": true
+          },
+          "details": "Stable path produces decision",
+          "failure_reason": null
+        },
+        {
+          "check_id": "stable.state",
+          "title": "Stable cycles remain within personal baseline",
+          "category": "stable",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "adi_range": [
+              9.843110973319982,
+              13.131264169269524
+            ],
+            "states": [
+              "WITHIN_PERSONAL_BASELINE",
+              "WITHIN_PERSONAL_BASELINE",
+              "WITHIN_PERSONAL_BASELINE"
+            ]
+          },
+          "details": "Stable cycles remain within personal baseline",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "quality",
+      "title": "Technical quality gating",
+      "checks": [
+        {
+          "check_id": "quality.active-motion",
+          "title": "ACTIVE MOTION blocks rejected downstream data",
+          "category": "quality",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "observations": {
+              "quality": "REJECTED",
+              "quality_score": 38.361055268010546,
+              "rejection_reasons": [
+                "HIGH_MOTION",
+                "POSTURE_UNSTABLE"
+              ],
+              "pipeline_status": "BLOCKED_BY_QUALITY",
+              "bis_ran": false,
+              "ml_ran": false,
+              "decision_updated": false
+            },
+            "invariant_checks": {
+              "quality_rejected": true,
+              "bis_blocked": true,
+              "ml_blocked": true,
+              "temporal_blocked": true,
+              "decision_blocked": true
+            }
+          },
+          "details": "ACTIVE MOTION blocks rejected downstream data",
+          "failure_reason": null
+        },
+        {
+          "check_id": "quality.poor-contact",
+          "title": "POOR CONTACT blocks rejected downstream data",
+          "category": "quality",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "observations": {
+              "quality": "REJECTED",
+              "quality_score": 68.07740136455075,
+              "rejection_reasons": [
+                "CONTACT_UNSTABLE",
+                "CONTACT_IMPEDANCE_HIGH"
+              ],
+              "pipeline_status": "BLOCKED_BY_QUALITY",
+              "bis_ran": false,
+              "ml_ran": false,
+              "decision_updated": false
+            },
+            "invariant_checks": {
+              "quality_rejected": true,
+              "bis_blocked": true,
+              "ml_blocked": true,
+              "temporal_blocked": true,
+              "decision_blocked": true
+            }
+          },
+          "details": "POOR CONTACT blocks rejected downstream data",
+          "failure_reason": null
+        },
+        {
+          "check_id": "quality.posture-transition",
+          "title": "POSTURE TRANSITION blocks rejected downstream data",
+          "category": "quality",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "observations": {
+              "quality": "REJECTED",
+              "quality_score": 38.361055268010546,
+              "rejection_reasons": [
+                "HIGH_MOTION",
+                "POSTURE_UNSTABLE"
+              ],
+              "pipeline_status": "BLOCKED_BY_QUALITY",
+              "bis_ran": false,
+              "ml_ran": false,
+              "decision_updated": false
+            },
+            "invariant_checks": {
+              "quality_rejected": true,
+              "bis_blocked": true,
+              "ml_blocked": true,
+              "temporal_blocked": true,
+              "decision_blocked": true
+            }
+          },
+          "details": "POSTURE TRANSITION blocks rejected downstream data",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "longitudinal",
+      "title": "Longitudinal scenarios",
+      "checks": [
+        {
+          "check_id": "longitudinal.left",
+          "title": "Slow LEFT direction and persistence",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "systemic": 0.04040781834643137,
+            "unilateral": 0.9595921816535686,
+            "coherence": 0.04040781834643137,
+            "side": "LEFT",
+            "adi": 88.7376036157156,
+            "state": "PERSISTENT_DEVIATION"
+          },
+          "details": "Slow LEFT direction and persistence",
+          "failure_reason": null
+        },
+        {
+          "check_id": "longitudinal.right",
+          "title": "Slow RIGHT reverses direction",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "systemic": 0.07363274544889631,
+            "unilateral": 0.9263672545511037,
+            "coherence": 0.07363274544889631,
+            "side": "RIGHT",
+            "adi": 86.8560447601814,
+            "state": "PERSISTENT_DEVIATION"
+          },
+          "details": "Slow RIGHT reverses direction",
+          "failure_reason": null
+        },
+        {
+          "check_id": "longitudinal.symmetry",
+          "title": "LEFT/RIGHT ADI within engineering tolerance",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "difference": 1.8815588555341947,
+            "tolerance": 10.0
+          },
+          "details": "LEFT/RIGHT ADI within engineering tolerance",
+          "failure_reason": null
+        },
+        {
+          "check_id": "longitudinal.systemic",
+          "title": "Systemic evidence rises and restrains unilateral escalation",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "systemic_run": {
+              "systemic": 0.7323604622002078,
+              "unilateral": 0.2676395377997922,
+              "coherence": 0.7323604622002078,
+              "side": "RIGHT",
+              "adi": 10.754556059931383,
+              "state": "WITHIN_PERSONAL_BASELINE"
+            },
+            "unilateral_reference": {
+              "systemic": 0.04040781834643137,
+              "unilateral": 0.9595921816535686,
+              "coherence": 0.04040781834643137,
+              "side": "LEFT",
+              "adi": 88.7376036157156,
+              "state": "PERSISTENT_DEVIATION"
+            },
+            "systemic_evidence_margin": 0.6919526438537764
+          },
+          "details": "Systemic evidence rises and restrains unilateral escalation",
+          "failure_reason": null
+        },
+        {
+          "check_id": "longitudinal.transient",
+          "title": "One transient does not create persistent state",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "starting_state": "WITHIN_PERSONAL_BASELINE",
+            "spike_state": "OBSERVING_CHANGE",
+            "novelty_z": 8.151826847613274,
+            "adi": 42.02801556967594,
+            "temporal_state": "TRANSIENT_ELEVATION"
+          },
+          "details": "One transient does not create persistent state",
+          "failure_reason": null
+        },
+        {
+          "check_id": "longitudinal.reset",
+          "title": "Scenario reset alone preserves decision",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "state_before_reset": "PERSISTENT_DEVIATION",
+            "state_immediately_after_reset": "PERSISTENT_DEVIATION",
+            "decision_time_before": "2026-09-12T20:30:00Z",
+            "decision_time_after": "2026-09-12T20:30:00Z",
+            "new_observation_after_reset": false
+          },
+          "details": "Scenario reset alone preserves decision",
+          "failure_reason": null
+        },
+        {
+          "check_id": "longitudinal.recovery",
+          "title": "Future observations permit recovery",
+          "category": "longitudinal",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "before": "PERSISTENT_DEVIATION",
+            "after_observation": "WITHIN_PERSONAL_BASELINE"
+          },
+          "details": "Future observations permit recovery",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "model_failure",
+      "title": "Safe model failure behavior",
+      "checks": [
+        {
+          "check_id": "model_failure.unavailable",
+          "title": "Missing model produces no fake downstream output",
+          "category": "model_failure",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "observations": {
+              "pipeline_status": "ML_UNAVAILABLE",
+              "ml_result": null,
+              "temporal_updated": false,
+              "decision_updated": false,
+              "artifact_modified": false
+            },
+            "invariant_checks": {
+              "runtime_ml_unavailable": true,
+              "no_ml_result": true,
+              "no_temporal": true,
+              "no_confounder": true,
+              "no_decision": true
+            }
+          },
+          "details": "Missing model produces no fake downstream output",
+          "failure_reason": null
+        },
+        {
+          "check_id": "model_failure.restored",
+          "title": "Normal interpreter restored",
+          "category": "model_failure",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "restored": true
+          },
+          "details": "Normal interpreter restored",
+          "failure_reason": null
+        },
+        {
+          "check_id": "model_failure.hash",
+          "title": "Isolated hash mismatch rejected",
+          "category": "model_failure",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "loaded": false,
+            "error": "model SHA256 mismatch",
+            "committed_artifact_modified": false
+          },
+          "details": "Isolated hash mismatch rejected",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "boundaries",
+      "title": "Anti-leakage and product boundaries",
+      "checks": [
+        {
+          "check_id": "boundaries.leakage",
+          "title": "Scenario/challenge fields absent from intelligence contracts",
+          "category": "boundaries",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "forbidden_fields": [
+              "affected_arm",
+              "challenge_id",
+              "challenge_type",
+              "scenario_id",
+              "scenario_type",
+              "severity"
+            ],
+            "inspected_contracts": {
+              "ml_input_names": [
+                "left_low_high_magnitude_ratio",
+                "left_low_high_resistance_ratio",
+                "left_magnitude_log_frequency_slope_ohm_per_log10_hz",
+                "left_phase_range_deg",
+                "left_resistance_log_frequency_slope_ohm_per_log10_hz",
+                "log_magnitude_ratio_100000hz",
+                "log_magnitude_ratio_10000hz",
+                "log_magnitude_ratio_200000hz",
+                "log_magnitude_ratio_20000hz",
+                "log_magnitude_ratio_50000hz",
+                "log_magnitude_ratio_5000hz",
+                "magnitude_ratio_100000hz",
+                "magnitude_ratio_10000hz",
+                "magnitude_ratio_200000hz",
+                "magnitude_ratio_20000hz",
+                "magnitude_ratio_50000hz",
+                "magnitude_ratio_5000hz",
+                "normalized_magnitude_difference_100000hz",
+                "normalized_magnitude_difference_10000hz",
+                "normalized_magnitude_difference_200000hz",
+                "normalized_magnitude_difference_20000hz",
+                "normalized_magnitude_difference_50000hz",
+                "normalized_magnitude_difference_5000hz",
+                "phase_difference_deg_100000hz",
+                "phase_difference_deg_10000hz",
+                "phase_difference_deg_200000hz",
+                "phase_difference_deg_20000hz",
+                "phase_difference_deg_50000hz",
+                "phase_difference_deg_5000hz",
+                "right_low_high_magnitude_ratio",
+                "right_low_high_resistance_ratio",
+                "right_magnitude_log_frequency_slope_ohm_per_log10_hz",
+                "right_phase_range_deg",
+                "right_resistance_log_frequency_slope_ohm_per_log10_hz"
+              ],
+              "temporal_observation": [
+                "baseline_revision",
+                "feature_revision",
+                "measurement_attempt_id",
+                "model_novelty_score",
+                "model_revision",
+                "novelty_z",
+                "observation_id",
+                "reconstruction_error_mse",
+                "simulated_time"
+              ],
+              "decision_snapshot": [
+                "adi",
+                "adi_revision",
+                "components",
+                "decision_engine_name",
+                "dominant_observed_side",
+                "evidence_revisions",
+                "explanation_codes",
+                "explanations",
+                "modifiers",
+                "simulated_time",
+                "state_machine_revision",
+                "surveillance_state"
+              ],
+              "patient_view": [
+                "baseline",
+                "calibration_progress_percent",
+                "cloud_inference",
+                "display_name",
+                "fluid_balance_summary",
+                "latest_measurement",
+                "measurement_summary",
+                "patient_id",
+                "pipeline_status",
+                "privacy_summary",
+                "processing",
+                "prototype_disclosure",
+                "qualified_observations",
+                "qualified_recent_attempts",
+                "raw_data",
+                "recommended_message",
+                "rejected_recent_attempts",
+                "required_observations",
+                "required_span_days",
+                "simulated_span_days",
+                "simulated_time",
+                "state",
+                "state_message",
+                "state_title",
+                "surveillance_state",
+                "synthetic",
+                "synthetic_patient",
+                "technical_quality_label",
+                "total_recent_attempts",
+                "trend",
+                "updated_surveillance_state"
+              ],
+              "clinician_view": [
+                "adi",
+                "adi_label",
+                "adi_revision",
+                "baseline_revision",
+                "baseline_summary",
+                "bilateral_summary",
+                "confounder_summary",
+                "decision_components",
+                "decision_modifiers",
+                "difference_ohm",
+                "display_name",
+                "dominant_observed_side",
+                "explanations",
+                "feature_revision",
+                "frequency_hz",
+                "inference",
+                "input",
+                "latest_measurement",
+                "latest_score",
+                "left_magnitude_ohm",
+                "longitudinal_trend",
+                "model",
+                "model_metadata_summary",
+                "model_revision",
+                "observations",
+                "patient",
+                "patient_id",
+                "pipeline_status",
+                "prototype_disclosure",
+                "qualified_recent",
+                "quality_summary",
+                "rejected_recent",
+                "right_magnitude_ohm",
+                "runtime",
+                "simulated_time",
+                "span_days",
+                "spectral_summary",
+                "state",
+                "state_history",
+                "state_last_updated",
+                "surveillance_state",
+                "synthetic",
+                "temporal_summary",
+                "updated_decision"
+              ]
+            },
+            "ml_input_dimension": 34,
+            "ground_truth_leakage": "NONE DETECTED"
+          },
+          "details": "Scenario/challenge fields absent from intelligence contracts",
+          "failure_reason": null
+        },
+        {
+          "check_id": "boundaries.patient",
+          "title": "Patient projection is minimized",
+          "category": "boundaries",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "keys": [
+              "baseline",
+              "calibration_progress_percent",
+              "cloud_inference",
+              "display_name",
+              "fluid_balance_summary",
+              "latest_measurement",
+              "measurement_summary",
+              "patient_id",
+              "privacy_summary",
+              "processing",
+              "prototype_disclosure",
+              "qualified_observations",
+              "qualified_recent_attempts",
+              "raw_data",
+              "recommended_message",
+              "rejected_recent_attempts",
+              "required_observations",
+              "required_span_days",
+              "simulated_span_days",
+              "state",
+              "state_message",
+              "state_title",
+              "surveillance_state",
+              "synthetic",
+              "synthetic_patient",
+              "total_recent_attempts",
+              "trend"
+            ]
+          },
+          "details": "Patient projection is minimized",
+          "failure_reason": null
+        },
+        {
+          "check_id": "boundaries.clinician",
+          "title": "Clinician projection remains scenario-blind",
+          "category": "boundaries",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "keys": [
+              "adi",
+              "adi_label",
+              "adi_revision",
+              "baseline_revision",
+              "baseline_summary",
+              "bilateral_summary",
+              "confounder_summary",
+              "decision_components",
+              "decision_modifiers",
+              "display_name",
+              "dominant_observed_side",
+              "explanations",
+              "feature_revision",
+              "inference",
+              "input",
+              "latest_measurement",
+              "latest_score",
+              "longitudinal_trend",
+              "model",
+              "model_metadata_summary",
+              "model_revision",
+              "observations",
+              "patient",
+              "patient_id",
+              "prototype_disclosure",
+              "qualified_recent",
+              "quality_summary",
+              "rejected_recent",
+              "runtime",
+              "span_days",
+              "spectral_summary",
+              "state",
+              "state_history",
+              "surveillance_state",
+              "synthetic",
+              "temporal_summary"
+            ]
+          },
+          "details": "Clinician projection remains scenario-blind",
+          "failure_reason": null
+        },
+        {
+          "check_id": "boundaries.engineering",
+          "title": "Ground truth limited to designed engineering views",
+          "category": "boundaries",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "lab_truth": true,
+            "digital_twin_truth": true
+          },
+          "details": "Ground truth limited to designed engineering views",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "stale_replay",
+      "title": "Stale-cycle and replay integrity",
+      "checks": [
+        {
+          "check_id": "stale.cycle",
+          "title": "Rejected cycle does not inherit AI output",
+          "category": "stale",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "valid_cycle_id": "84237474-67b5-5f56-a5d0-b628d7ff8486:attempt:29",
+            "rejected_cycle_id": "84237474-67b5-5f56-a5d0-b628d7ff8486:attempt:30",
+            "rejected_pipeline_status": "BLOCKED_BY_QUALITY",
+            "decision_updated": false,
+            "current_surveillance_state": "WITHIN_PERSONAL_BASELINE",
+            "last_decision_time": "2026-09-06T20:30:00Z",
+            "rejected_cycle_adi": null
+          },
+          "details": "Rejected cycle does not inherit AI output",
+          "failure_reason": null
+        },
+        {
+          "check_id": "replay.order",
+          "title": "Timeline events append in order",
+          "category": "replay",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "sequence": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "details": "Timeline events append in order",
+          "failure_reason": null
+        },
+        {
+          "check_id": "replay.rejected",
+          "title": "Rejected replay event has no fake AI",
+          "category": "replay",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "rejected_count": 1
+          },
+          "details": "Rejected replay event has no fake AI",
+          "failure_reason": null
+        },
+        {
+          "check_id": "replay.observer",
+          "title": "Observer replay strips ground truth",
+          "category": "replay",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "events": 4
+          },
+          "details": "Observer replay strips ground truth",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "privacy_adversarial",
+      "title": "Privacy consistency and adversarial suite",
+      "checks": [
+        {
+          "check_id": "privacy.local",
+          "title": "Privacy DTO reports local INT8 inference",
+          "category": "privacy",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "model_name": "Aequor Tiny Autoencoder",
+            "revision": "aequor-ae-v1",
+            "artifact_type": "TFLite",
+            "quantization": "INT8",
+            "file_size_bytes": 9008,
+            "runtime": "TFLITE_INT8",
+            "execution_location": "LOCAL PROTOTYPE PROCESS",
+            "hash_verification": "SHA-256 metadata verified during load",
+            "input_dimension": 34,
+            "loaded": true,
+            "missing_behavior": "ML_UNAVAILABLE; no fallback score, temporal update, confounder update, or decision update",
+            "artifact_on_local_disk": true
+          },
+          "details": "Privacy DTO reports local INT8 inference",
+          "failure_reason": null
+        },
+        {
+          "check_id": "privacy.cloud",
+          "title": "Privacy DTO reports no cloud/model API",
+          "category": "privacy",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "cloud_inference_required": false,
+            "external_model_api_required": false,
+            "internet_required_for_core_inference": false,
+            "frontend_backend_transport": "Local HTTP and WebSocket",
+            "startup_note": "Locally installed Python, JavaScript, and model/runtime dependencies are still required."
+          },
+          "details": "Privacy DTO reports no cloud/model API",
+          "failure_reason": null
+        },
+        {
+          "check_id": "privacy.future",
+          "title": "Hardware deployment explicitly future",
+          "category": "privacy",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status": "FUTURE / TARGET ARCHITECTURE — NOT CURRENTLY IMPLEMENTED",
+            "components": [
+              "nRF5340 edge controller target",
+              "AD5940/AD5941 bioimpedance target",
+              "TMP117 temperature target",
+              "physical IMU target",
+              "BLE summary transport target"
+            ],
+            "current_execution": "Python/FastAPI and local TFLite runtime on the development computer"
+          },
+          "details": "Hardware deployment explicitly future",
+          "failure_reason": null
+        },
+        {
+          "check_id": "privacy.copy",
+          "title": "No unsupported positive claims",
+          "category": "privacy",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "matches": []
+          },
+          "details": "No unsupported positive claims",
+          "failure_reason": null
+        },
+        {
+          "check_id": "adversarial.critical",
+          "title": "Critical adversarial invariants pass",
+          "category": "adversarial",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "results": {
+              "active-motion": "PASS",
+              "poor-contact": "PASS",
+              "posture-transition": "PASS",
+              "transient-spike": "PASS",
+              "systemic-shift": "PASS",
+              "arm-symmetry": "PASS",
+              "model-unavailable": "PASS",
+              "label-leakage": "PASS",
+              "scenario-reset": "PASS",
+              "stale-decision": "PASS"
+            }
+          },
+          "details": "Critical adversarial invariants pass",
+          "failure_reason": null
+        },
+        {
+          "check_id": "adversarial.noncritical",
+          "title": "Noncritical adversarial outcomes recorded",
+          "category": "adversarial",
+          "status": "PASS",
+          "critical": false,
+          "duration_ms": 90.685,
+          "evidence": {
+            "results": {
+              "active-motion": "PASS",
+              "poor-contact": "PASS",
+              "posture-transition": "PASS",
+              "transient-spike": "PASS",
+              "systemic-shift": "PASS",
+              "arm-symmetry": "PASS",
+              "model-unavailable": "PASS",
+              "label-leakage": "PASS",
+              "scenario-reset": "PASS",
+              "stale-decision": "PASS"
+            }
+          },
+          "details": "Noncritical adversarial outcomes recorded",
+          "failure_reason": null
+        }
+      ]
+    },
+    {
+      "section_id": "api_frontend",
+      "title": "API, WebSocket, and frontend routes",
+      "checks": [
+        {
+          "check_id": "api.health",
+          "title": "API smoke /health",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /health",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.system.status",
+          "title": "API smoke /api/v1/system/status",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/system/status",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.runtime.status",
+          "title": "API smoke /api/v1/runtime/status",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/runtime/status",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.patient",
+          "title": "API smoke /api/v1/views/patient",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/patient",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.clinician",
+          "title": "API smoke /api/v1/views/clinician",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/clinician",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.engineering",
+          "title": "API smoke /api/v1/views/engineering",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/engineering",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.lab",
+          "title": "API smoke /api/v1/views/lab",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/lab",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.digital-twin",
+          "title": "API smoke /api/v1/views/digital-twin",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/digital-twin",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.timeline",
+          "title": "API smoke /api/v1/views/timeline",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/timeline",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.views.privacy",
+          "title": "API smoke /api/v1/views/privacy",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/views/privacy",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.challenges",
+          "title": "API smoke /api/v1/challenges",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/challenges",
+          "failure_reason": null
+        },
+        {
+          "check_id": "api.api.v1.demo.status",
+          "title": "API smoke /api/v1/demo/status",
+          "category": "api",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "status_code": 200
+          },
+          "details": "API smoke /api/v1/demo/status",
+          "failure_reason": null
+        },
+        {
+          "check_id": "websocket.runtime",
+          "title": "Runtime WebSocket connects and publishes cycle update",
+          "category": "websocket",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "initial_cycle": null,
+            "updated_cycle": "84237474-67b5-5f56-a5d0-b628d7ff8486:attempt:1"
+          },
+          "details": "Runtime WebSocket connects and publishes cycle update",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.home",
+          "title": "Frontend route source /",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/"
+          },
+          "details": "Frontend route source /",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.patient",
+          "title": "Frontend route source /patient",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/patient"
+          },
+          "details": "Frontend route source /patient",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.clinician",
+          "title": "Frontend route source /clinician",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/clinician"
+          },
+          "details": "Frontend route source /clinician",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.engineering",
+          "title": "Frontend route source /engineering",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/engineering"
+          },
+          "details": "Frontend route source /engineering",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.lab",
+          "title": "Frontend route source /lab",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/lab"
+          },
+          "details": "Frontend route source /lab",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.digital-twin",
+          "title": "Frontend route source /digital-twin",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/digital-twin"
+          },
+          "details": "Frontend route source /digital-twin",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.timeline",
+          "title": "Frontend route source /timeline",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/timeline"
+          },
+          "details": "Frontend route source /timeline",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.privacy",
+          "title": "Frontend route source /privacy",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/privacy"
+          },
+          "details": "Frontend route source /privacy",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.challenge",
+          "title": "Frontend route source /challenge",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/challenge"
+          },
+          "details": "Frontend route source /challenge",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.demo",
+          "title": "Frontend route source /demo",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "route": "/demo"
+          },
+          "details": "Frontend route source /demo",
+          "failure_reason": null
+        },
+        {
+          "check_id": "frontend.build_config",
+          "title": "Frontend package scripts available",
+          "category": "frontend",
+          "status": "PASS",
+          "critical": true,
+          "duration_ms": 90.685,
+          "evidence": {
+            "scripts": {
+              "dev": "next dev",
+              "build": "next build",
+              "start": "next start",
+              "lint": "eslint .",
+              "typecheck": "tsc --noEmit"
+            }
+          },
+          "details": "Frontend package scripts available",
+          "failure_reason": null
+        }
+      ]
+    }
+  ],
+  "scenario_summary": {
+    "slow_left": {
+      "systemic": 0.04040781834643137,
+      "unilateral": 0.9595921816535686,
+      "coherence": 0.04040781834643137,
+      "side": "LEFT",
+      "adi": 88.7376036157156,
+      "state": "PERSISTENT_DEVIATION"
+    },
+    "slow_right": {
+      "systemic": 0.07363274544889631,
+      "unilateral": 0.9263672545511037,
+      "coherence": 0.07363274544889631,
+      "side": "RIGHT",
+      "adi": 86.8560447601814,
+      "state": "PERSISTENT_DEVIATION"
+    },
+    "systemic": {
+      "systemic_run": {
+        "systemic": 0.7323604622002078,
+        "unilateral": 0.2676395377997922,
+        "coherence": 0.7323604622002078,
+        "side": "RIGHT",
+        "adi": 10.754556059931383,
+        "state": "WITHIN_PERSONAL_BASELINE"
+      },
+      "unilateral_reference": {
+        "systemic": 0.04040781834643137,
+        "unilateral": 0.9595921816535686,
+        "coherence": 0.04040781834643137,
+        "side": "LEFT",
+        "adi": 88.7376036157156,
+        "state": "PERSISTENT_DEVIATION"
+      },
+      "systemic_evidence_margin": 0.6919526438537764
+    },
+    "transient": {
+      "starting_state": "WITHIN_PERSONAL_BASELINE",
+      "spike_state": "OBSERVING_CHANGE",
+      "novelty_z": 8.151826847613274,
+      "adi": 42.02801556967594,
+      "temporal_state": "TRANSIENT_ELEVATION"
+    },
+    "recovery": {
+      "before": "PERSISTENT_DEVIATION",
+      "after": "WITHIN_PERSONAL_BASELINE"
+    }
+  },
+  "known_warnings": [
+    "Synthetic sensing is not clinical or hardware validation.",
+    "Security controls remain prototype-only."
+  ]
+}

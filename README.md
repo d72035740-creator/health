@@ -1,12 +1,51 @@
 # Aequor Health
 
-Aequor Health is a proposed bilateral wearable surveillance platform for detecting persistent physiological changes associated with possible early lymphedema. The eventual system is intended to combine multi-frequency bioimpedance, motion, skin-temperature, and electrode-contact sensing with local Edge-AI processing.
+Aequor is a personalized Edge-AI surveillance prototype for studying subtle bilateral physiological change. It matters because a single universal threshold can miss an individual's changing pattern: Aequor instead combines motion-qualified multi-frequency bioimpedance, a personal baseline, local INT8 inference, and longitudinal evidence.
 
-> **Phase 18 + 19 prototype disclaimer:** Engineering inspection and replay may expose simulated digital-twin ground truth for comparison. They do not represent physical sensor validation or clinical performance.
+> **Prototype boundary:** physiological and sensor inputs are simulated. Quality gating, signal processing, baseline statistics, INT8 TFLite inference, temporal/confounder reasoning, and decision-state logic are real executable software. This prototype is not a diagnostic device, is not clinically validated, and reports no disease probability.
+
+## Quick start
+
+Use Python 3.11–3.13 (Python 3.12 is recommended) and Node.js 20+.
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r backend/requirements.txt
+$env:PYTHONPATH='backend'
+python -m uvicorn app.main:app --reload --port 8000
+```
+
+In a second terminal:
+
+```powershell
+npm --prefix frontend install
+$env:NEXT_PUBLIC_API_BASE_URL='http://localhost:8000'
+npm --prefix frontend run dev
+```
+
+Open `http://localhost:3000` and select **Start Demo**. The backend expects the committed INT8 artifact and metadata in `backend/models`; normal startup does not retrain the model. Removing or invalidating that artifact makes inference explicitly unavailable—there is no fallback score.
+
+## Demo flow
+
+The `/demo` guided path performs a clean reset, establishes the 28-observation personalized baseline, verifies a stable observation, and advances an existing slow-left scenario through legal simulation/runtime APIs. It then links to patient, clinician, and adversarial views. The orchestrator chooses controls and timing only; novelty, temporal evidence, dominant side, ADI, and surveillance state emerge from the normal pipeline.
+
+## Release verification
+
+```powershell
+$env:PYTHONPATH='backend'
+.\.venv\Scripts\python.exe -m app.verification.run
+python -m pytest backend/tests
+npm --prefix frontend run lint
+npm --prefix frontend run typecheck
+npm --prefix frontend run build
+```
+
+The release command exercises real workflows and writes `verification/latest-verification.json` and `verification/latest-verification.md`. See [architecture](docs/ARCHITECTURE.md), [contracts](docs/DATA_CONTRACTS.md), [phase status](docs/PHASES.md), and the [competition demo script](docs/DEMO_SCRIPT.md).
 
 ## Current scope
 
-This repository implements **Phase 18 + 19 — Digital Twin Inspector & Timeline Replay**, while preserving the earlier foundation:
+This repository implements **Phases 0–23**, ending with automated release verification and a polished competition demo:
 
 - a Next.js/TypeScript/Tailwind product shell;
 - a FastAPI/Pydantic backend shell;
@@ -43,6 +82,11 @@ This repository implements **Phase 18 + 19 — Digital Twin Inspector & Timeline
 - append-only in-memory replay sessions with recorded measurement, ML, temporal, confounder, and decision evidence;
 - a ground-truth toggle whose observer-only backend projection removes scenario events and fields; and
 - replay charts, state bands, rejection markers, and event details without historical algorithm recomputation;
+- a backend-owned privacy/data-flow inspector documenting local execution, in-memory retention, network dependencies, and missing production controls;
+- explicit separation between current software and planned nRF5340/AD594x/TMP117/IMU/BLE hardware targets;
+- ten isolated adversarial challenges that compute PASS, FAIL, or INCONCLUSIVE from actual quality/runtime/evidence contracts;
+- safe in-memory model-unavailable testing without changing the committed TFLite artifact; and
+- structural challenge/scenario-label leakage inspection across ML, temporal, decision, patient, and clinician boundaries;
 - structured backend logging and focused tests; and
 - documented boundaries for later phases.
 

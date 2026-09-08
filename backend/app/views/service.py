@@ -14,6 +14,7 @@ from app.simulation.bioimpedance.cole import ColeImpedanceModel
 from app.simulation.bioimpedance.config import DEFAULT_FREQUENCIES, LEFT_ARM_PARAMETERS, RIGHT_ARM_PARAMETERS
 from math import atan2, degrees, sqrt
 from app.timeline.service import timeline_service
+from app.ml.config import MODEL_DIR, MODEL_REVISION
 
 COPY={
 'CALIBRATING':('Learning your personal reference','Aequor is collecting qualified measurements to learn your normal bilateral pattern.'),
@@ -145,3 +146,42 @@ class TimelineReplayViewService:
 
 
 timeline_replay_view_service=TimelineReplayViewService()
+
+
+class PrivacyInspectorService:
+ def snapshot(self):
+    model=ml_runtime.status(); artifact=MODEL_DIR/f'{MODEL_REVISION}-int8.tflite'
+    input_dimension=None
+    if ml_runtime._interpreter is not None:
+      shape=ml_runtime._interpreter.get_input_details()[0]['shape']; input_dimension=1
+      for size in shape: input_dimension*=int(size)
+    return PrivacyInspectorSnapshot(
+      title='PRIVACY & DATA-FLOW INSPECTOR',prototype_mode='SIMULATION',
+      disclosure='Current implementation: a local software prototype using entirely simulated sensor and physiological data. It is not a deployed medical device or production security architecture.',
+      data_sources=[
+       {'classification':'SIMULATED RAW SENSOR DATA','items':['IMU','skin temperature','electrode contact impedance','bilateral multi-frequency BIS'],'location':'Local prototype process'},
+       {'classification':'DERIVED LOCAL DATA','items':['processed BIS features','personalized baseline','ML novelty','temporal history','confounder evidence','ADI','surveillance state'],'location':'Local prototype process'},
+       {'classification':'ENGINEERING-ONLY GROUND TRUTH','items':['scenario type','configured affected side','hidden Cole modifiers','synthetic progression'],'location':'Engineering simulation state'}],
+      processing_stages=[{'stage':x,'execution_location':'LOCAL PROTOTYPE PROCESS'} for x in ['Technical quality engine','BIS signal processing','Personalized baseline','INT8 TFLite inference','Temporal intelligence','Confounder reasoning','Decision engine']],
+      data_flow={'intelligence_path':['Synthetic sensors','Local Quality Engine','Local Signal Processing','Local Personalized Baseline','Local INT8 TFLite','Local Temporal / Confounder / Decision'],'cloud_inference_branch':None,'application_topology':['Frontend browser','Local HTTP / WebSocket','Local FastAPI backend']},
+      storage_locations=[
+       {'data':'Virtual sensor window and acquired sweep','location':'Process memory','lifetime':'Measurement/runtime-history lifetime','used_by':'Quality, signal processing, runtime'},
+       {'data':'Personalized baseline','location':'Process memory','lifetime':'Until full reset or process restart','used_by':'Baseline comparison'},
+       {'data':'Runtime and temporal histories','location':'Process memory','lifetime':'Until full reset or process restart','used_by':'Runtime, temporal views'},
+       {'data':'Timeline sessions','location':'Process memory','lifetime':'Until process restart; full reset starts a new retained in-memory session','used_by':'Engineering replay'},
+       {'data':'Adversarial challenge history','location':'Process memory','lifetime':'Until process restart; simulation resets do not erase result history','used_by':'Challenge dashboard'},
+       {'data':'Scenario ground truth','location':'Process memory','lifetime':'Engineering simulation session','used_by':'Lab, Digital Twin, engineering replay'},
+       {'data':'INT8 TFLite model and metadata','location':'Local disk','lifetime':'Persistent artifact until changed or removed','used_by':'Local ML runtime'}],
+      network_dependencies={'cloud_inference_required':False,'external_model_api_required':False,'internet_required_for_core_inference':False,'frontend_backend_transport':'Local HTTP and WebSocket','startup_note':'Locally installed Python, JavaScript, and model/runtime dependencies are still required.'},
+      external_services=[],
+      model_execution={'model_name':model['model_name'],'revision':model['model_revision'],'artifact_type':'TFLite','quantization':'INT8','file_size_bytes':model['model_size_bytes'],'runtime':model['runtime'],'execution_location':'LOCAL PROTOTYPE PROCESS','hash_verification':'SHA-256 metadata verified during load' if model['loaded'] else 'NOT VERIFIED / MODEL UNAVAILABLE','input_dimension':input_dimension,'loaded':model['loaded'],'missing_behavior':'ML_UNAVAILABLE; no fallback score, temporal update, confounder update, or decision update','artifact_on_local_disk':artifact.exists()},
+      retention_behavior={'full_reset_clears':['personalized baseline','runtime history','temporal history','confounder state','decision state','active scenario'],'full_reset_boundary':['starts a new timeline replay session; older sessions and challenge results remain in process memory'], 'process_restart_clears':['all in-memory state and histories, including replay sessions and challenge results'],'disk_artifacts_persist':['INT8 TFLite model','model metadata','application source and configuration']},
+      sensitive_data_boundary={'engineering_truth_allowed_in':['Aequor Lab','Digital Twin Inspector','Timeline when ground truth enabled','Privacy Inspector classification'],'engineering_truth_forbidden_from':['PatientViewSnapshot','ClinicianViewSnapshot','ML input','TemporalObservation','DecisionSnapshot'],'statement':'Scenario truth is an engineering comparison channel and is not supplied to Aequor intelligence.'},
+      audience_boundaries=[{'audience':'PATIENT VIEW','scope':'Minimum understandable longitudinal summary'},{'audience':'CLINICIAN VIEW','scope':'Greater observed technical evidence without scenario truth'},{'audience':'ENGINEERING VIEW','scope':'Synthetic ground truth and algorithm internals for validation'}],
+      simulated_vs_real={'simulated':['physiology','BIS','IMU','temperature','contact','scenario ground truth'],'executable_local_software':['quality gating','signal processing','baseline learning','INT8 TFLite invocation','temporal/confounder logic','ADI and state machine','timeline recording']},
+      not_yet_implemented=['User authentication','Encrypted persistent clinical database','Production access-control policy','Hardware secure storage','Regulatory compliance framework','Real BLE wearable transport','Real hardware sensor encryption'],
+      planned_hardware_deployment={'status':'FUTURE / TARGET ARCHITECTURE — NOT CURRENTLY IMPLEMENTED','components':['nRF5340 edge controller target','AD5940/AD5941 bioimpedance target','TMP117 temperature target','physical IMU target','BLE summary transport target'],'current_execution':'Python/FastAPI and local TFLite runtime on the development computer'},
+      limitations=['No clinical data is processed in the current prototype.','No authentication, authorization, encrypted clinical persistence, or regulatory certification is implemented.','Local operation still depends on installed software dependencies.','Future hardware security and transport claims require implementation and verification.'])
+
+
+privacy_inspector_service=PrivacyInspectorService()

@@ -90,3 +90,23 @@ class DigitalTwinInspectorSnapshot(ContractModel):
     virtual_sensors: VirtualSensorInspectorSummary
     anti_leakage: dict[str, object]
     noise_explanation: list[str]
+
+
+class PrivacyInspectorSnapshot(ContractModel):
+    title: str
+    prototype_mode: str
+    disclosure: str
+    data_sources: list[dict[str, object]]
+    processing_stages: list[dict[str, object]]
+    data_flow: dict[str, object]
+    storage_locations: list[dict[str, object]]
+    network_dependencies: dict[str, object]
+    external_services: list[str]
+    model_execution: dict[str, object]
+    retention_behavior: dict[str, object]
+    sensitive_data_boundary: dict[str, object]
+    audience_boundaries: list[dict[str, object]]
+    simulated_vs_real: dict[str, list[str]]
+    not_yet_implemented: list[str]
+    planned_hardware_deployment: dict[str, object]
+    limitations: list[str]

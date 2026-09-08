@@ -21,16 +21,17 @@ type Replay = {
 export function TimelineReplay() {
   const [truth, setTruth] = useState(true);
   const [data, setData] = useState<Replay | null>(null);
+  const [error, setError] = useState(false);
   const [selected, setSelected] = useState(0);
   const load = useCallback(async (showTruth: boolean) => {
-    const next: Replay = await (await fetch(`${api}/api/v1/views/timeline?include_ground_truth=${showTruth}`)).json();
-    setData(next); setSelected((index) => Math.min(index, Math.max(0, next.events.length - 1)));
+    try { const response=await fetch(`${api}/api/v1/views/timeline?include_ground_truth=${showTruth}`); if(!response.ok)throw new Error(); const next:Replay=await response.json(); setData(next);setError(false);setSelected((index) => Math.min(index, Math.max(0, next.events.length - 1))); } catch { setError(true) }
   }, []);
   useEffect(() => {
     const first = setTimeout(() => void load(truth), 0);
     const interval = setInterval(() => void load(truth), 4000);
     return () => { clearTimeout(first); clearInterval(interval); };
   }, [load, truth]);
+  if (error) return <main className="min-h-screen bg-[#081310] p-8 text-white"><b className="text-[#caaa68]">BACKEND UNAVAILABLE</b><p className="mt-3 text-sm">Recorded evidence is hidden until a fresh response is available.</p></main>;
   if (!data) return <main className="min-h-screen bg-[#081310] p-8 text-white">Preparing longitudinal replay…</main>;
   const event = data.events[selected] ?? null;
   return <main className="min-h-screen bg-[#081310] text-[#e7efeb]">

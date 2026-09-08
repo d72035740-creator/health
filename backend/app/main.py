@@ -14,6 +14,9 @@ from app.api.routes.measurement import router as measurement_router
 from app.api.routes.baseline import router as baseline_router
 from app.api.routes.scenarios import router as scenarios_router
 from app.api.routes.views import router as views_router
+from app.api.routes.challenges import router as challenges_router
+from app.api.routes.verification import router as verification_router
+from app.api.routes.demo import router as demo_router
 from app.api.websocket.simulation import router as simulation_websocket_router
 from app.api.websocket.system import router as system_websocket_router
 from app.api.websocket.runtime import router as runtime_websocket_router
@@ -71,6 +74,9 @@ app.include_router(measurement_router)
 app.include_router(baseline_router)
 app.include_router(scenarios_router)
 app.include_router(views_router)
+app.include_router(challenges_router)
+app.include_router(verification_router)
+app.include_router(demo_router)
 app.include_router(simulation_router)
 app.include_router(system_router)
 app.include_router(system_websocket_router)

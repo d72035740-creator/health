@@ -1,6 +1,6 @@
 # Delivery phases
 
-Phases 0 through 19 are implemented. Every later phase is a roadmap boundary, not a claim of functionality.
+Phases 0 through 23 are implemented and release-gated. There is no Phase 24 in this prototype scope.
 
 | Phase | Name | Status |
 | ---: | --- | --- |
@@ -24,7 +24,7 @@ Phases 0 through 19 are implemented. Every later phase is a roadmap boundary, no
 | 17 | Aequor Lab | Implemented |
 | 18 | Digital Twin Inspector | Implemented |
 | 19 | Timeline Replay | Implemented |
-| 20 | Privacy Inspector | Not implemented |
-| 21 | Adversarial Demo | Not implemented |
-| 22 | Automated Verification | Not implemented |
-| 23 | Final Product Polish | Not implemented |
+| 20 | Privacy Inspector | Implemented |
+| 21 | Adversarial Demo | Implemented |
+| 22 | Automated Verification | Implemented |
+| 23 | Final Product Polish | Implemented |

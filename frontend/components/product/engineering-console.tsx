@@ -1,12 +1,8 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 "use client";
 import { useCallback, useEffect, useState } from "react";
+import { connectRuntimeSocket, type RuntimeConnectionState } from "@/lib/websocket/runtime-socket";
 const api = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
-const ws =
-  (process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000").replace(
-    /^http/,
-    "ws",
-  ) + "/ws/runtime";
 type E = {
   header: Record<string, unknown>;
   pipeline: { stage: string; status: string }[];
@@ -29,30 +25,29 @@ type E = {
 };
 export function EngineeringConsole() {
   const [d, setD] = useState<E | null>(null);
+  const [error, setError] = useState(false);
+  const [connection, setConnection] = useState<RuntimeConnectionState>("CONNECTING");
+  const [busy, setBusy] = useState(false);
   const load = useCallback(
-    async () =>
-      setD(await (await fetch(`${api}/api/v1/views/engineering`)).json()),
+    async () => { try { const response=await fetch(`${api}/api/v1/views/engineering`); if(!response.ok)throw new Error(); setD(await response.json()); setError(false) } catch { setError(true) } },
     [],
   );
   useEffect(() => {
     const first = setTimeout(() => void load(), 0);
-    const socket = new WebSocket(ws);
-    socket.onmessage = () => void load();
+    const stopSocket = connectRuntimeSocket(()=>void load(),setConnection);
     const fallback = setInterval(() => void load(), 15000);
     return () => {
       clearTimeout(first);
       clearInterval(fallback);
-      socket.close();
+      stopSocket();
     };
   }, [load]);
   const post = async (path: string, body: object = {}) => {
-    await fetch(`${api}${path}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    await load();
+    if(busy)return; setBusy(true);
+    try { const response=await fetch(`${api}${path}`, {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)}); if(!response.ok)throw new Error(); await load(); } catch { setError(true) } finally { setBusy(false) }
   };
+  if (error)
+    return <main className="min-h-screen bg-[#071313] p-8 text-white"><p className="font-bold tracking-wider text-[#d8b978]">BACKEND UNAVAILABLE</p><p className="mt-3 text-sm text-[#91a59f]">Engineering data cannot be refreshed. Cached values are hidden while the connection is unavailable.</p></main>;
   if (!d)
     return (
       <main className="min-h-screen bg-[#071313] p-8 text-white">
@@ -86,19 +81,23 @@ export function EngineeringConsole() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <span className="rounded-full border border-white/10 px-3 py-2 text-[10px] text-[#8ca19b]">{connection}</span>
             <button
+              disabled={busy}
               onClick={() => void post("/api/v1/runtime/measure")}
               className="action"
             >
               Run measurement cycle
             </button>
             <button
+              disabled={busy}
               onClick={() => void post("/api/v1/temporal/reset")}
               className="action secondary"
             >
               Temporal reset
             </button>
             <button
+              disabled={busy}
               onClick={() => void post("/api/v1/simulation/reset")}
               className="action secondary"
             >
@@ -405,6 +404,8 @@ export function TopNav({ active }: { active: string }) {
             ["Aequor Lab", "/lab"],
             ["Digital Twin", "/digital-twin"],
             ["Timeline", "/timeline"],
+            ["Privacy", "/privacy"],
+            ["Try to Fool Aequor", "/challenge"],
           ].map(([x, u]) => (
             <a
               key={x}

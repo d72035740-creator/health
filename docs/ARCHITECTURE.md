@@ -141,6 +141,40 @@ Hidden Cole parameters → synthetic BIS → noisy acquired R/X → signal proce
 
 The default engineering replay may contain scenario truth. Its observer-only projection removes scenario-engine events and clears ground-truth fields before serialization. Patient and clinician DTOs remain unchanged and scenario-blind.
 
+## Privacy transparency
+
+`PrivacyInspectorSnapshot` describes the implementation rather than a target security posture. Synthetic raw data, derived evidence, and engineering ground truth are classified separately. Core processing—including verified INT8 TFLite invocation—runs in the local prototype process. The browser communicates with local FastAPI over HTTP/WebSocket; there is no cloud-inference or external-model-API branch. Runtime, baseline, temporal, decision, and timeline data are in memory, while model artifacts and metadata are local files.
+
+The privacy projection explicitly lists authentication, encrypted clinical persistence, production access control, hardware secure storage, regulatory compliance, BLE transport, and physical-sensor encryption as not implemented. nRF5340, AD5940/AD5941, TMP117, IMU, and BLE are labeled future target architecture, never current execution.
+
+## Adversarial challenge orchestration
+
+`AdversarialChallengeService` configures existing scenario, sensor-condition, simulation-time, and runtime services from outside the intelligence pipeline. Challenge identity is never added to measurement, ML, temporal, confounder, decision, patient, or clinician contracts. Each challenge begins and ends with a deterministic full reset. The model-unavailable challenge temporarily removes only the in-memory interpreter reference and restores it in `finally`; it never edits the artifact.
+
+```text
+Challenge controller → existing simulation/sensor controls → integrated runtime
+                                                        ↓
+                                       recorded observed evidence → verdict
+
+Challenge identity ─X→ ML / temporal / confounder / decision
+```
+
+PASS/FAIL is calculated from named invariant checks over observed outputs. Missing decisive evidence yields INCONCLUSIVE. Run history is process-local and no score is described as accuracy, sensitivity, specificity, or clinical performance.
+
+## Release verification and competition demo
+
+`ReleaseVerificationService` is an orchestration layer above the existing services. It performs deterministic resets, calibration, quality-gating, longitudinal, failure, privacy, adversarial, API, WebSocket, and source-route checks, then emits JSON and Markdown evidence. Its criticality policy is centralized: any critical failure produces `NOT_READY`; non-critical failures or warnings produce `READY_WITH_WARNINGS`.
+
+`CompetitionDemoService` is likewise an external orchestrator. It may reset, establish a baseline, select a scenario, advance authoritative time, and request integrated measurements. It derives its snapshot and chart points from stored runtime/timeline outputs and has no interface for assigning novelty, temporal values, observed side, ADI, or surveillance state.
+
+```text
+Demo control → scenario/time/sensor selection → authoritative runtime pipeline
+                                                   ↓
+                          recorded observations → demo projection
+
+Demo control ─X→ novelty / temporal evidence / ADI / surveillance state
+```
+
 ## Frontend modules
 
 - `app` owns App Router entry points and global presentation tokens.

@@ -25,9 +25,10 @@ const PRESETS = [
 ];
 export function LabControlRoom() {
   const [d, setD] = useState<L | null>(null);
+  const [error, setError] = useState(false);
   const [condition, setCondition] = useState("STABLE_REST");
   const load = useCallback(
-    async () => setD(await (await fetch(`${api}/api/v1/views/lab`)).json()),
+    async () => { try { const response=await fetch(`${api}/api/v1/views/lab`); if(!response.ok)throw new Error(); setD(await response.json()); setError(false) } catch { setError(true) } },
     [],
   );
   const post = async (path: string, body: object = {}) => {
@@ -46,6 +47,7 @@ export function LabControlRoom() {
       clearInterval(id);
     };
   }, [load]);
+  if (error) return <main className="min-h-screen bg-[#081310] p-8 text-white"><b className="text-[#d2aa68]">BACKEND UNAVAILABLE</b><p className="mt-3 text-sm">Lab evidence is hidden until the backend reconnects.</p></main>;
   if (!d)
     return (
       <main className="min-h-screen bg-[#081310] p-8 text-white">
